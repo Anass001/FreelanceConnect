@@ -1,0 +1,22 @@
+{
+  "name": "freelance-connect",
+  "version": "1.0.0",
+  "description": "freelance-connect",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@apollo/server": "^4.7.0",
+    "apollo-server-express": "^3.12.0",
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "graphql": "^16.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
