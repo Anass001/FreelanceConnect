@@ -1,2 +1,3 @@
 server/node_modules/
+server/nodemon.json
 client/node_modules/

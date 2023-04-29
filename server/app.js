@@ -1,15 +1,20 @@
 const express = require('express');
 const { ApolloServer, gql } = require('apollo-server-express');
+const mongoose = require('mongoose');
+
+const Service = require('./models/service');
 
 const typeDefs = gql`
 
   type Query {
     freelancers: [Freelancer]!,
     clients: [Client]!,
+    services: [Service]!,
   },
 
   type Mutation {
-    createFreelancer(username: String!, email: String!, full_name: String!, bio: String, profile_picture: String, joined_date: String!, last_login: String!, is_active: Boolean!, rating: Float!): Freelancer!,
+    createFreelancer(freelancer: FreelancerInput): Freelancer,
+    createService(service: ServiceInput): Service,
   },
 
   interface User {
@@ -48,6 +53,19 @@ const typeDefs = gql`
     earnings: Float!,
     status: FreelancerStatus!,
   },
+  input FreelancerInput {
+    username: String!,
+    email: String!,
+    full_name: String!,
+    bio: String,
+    profile_picture: String,
+    joined_date: String!,
+    last_login: String!,
+    is_active: Boolean!,
+    rating: Float!,
+    earnings: Float!,
+    status: FreelancerStatus!,
+  },
   type Client implements User {
     id: ID!,
     username: String!,
@@ -63,7 +81,13 @@ const typeDefs = gql`
     spending: Float!,
   },
 type Service {
-    id: ID!,
+    _id: ID!,
+    title: String!,
+    description: String!,
+    category: String!,
+    price: Float!,
+},
+input ServiceInput {
     title: String!,
     description: String!,
     category: String!,
@@ -123,30 +147,66 @@ const resolvers = {
           rating: 4.5
         },
       ]
+    },
+    services: () => {
+      return Service.find().then(services => {
+        return services.map(service => {
+          return { ...service._doc, _id: service.id };
+        });
+      }).catch(err => {
+        throw err;
+      });
+    },
   },
-  },
-  Mutation : {
-    createFreelancer: (parent, args) => {
+  Mutation: {
+    createFreelancer: (parent, { freelancer }) => {
       const newFreelancer = {
         id: 0,
-        username: args.username,
-        email: args.email,
-        full_name: args.full_name,
-        bio: args.bio,
-        profile_picture: args.profile_picture,
-        joined_date: args.joined_date,
-        last_login: args.last_login,
-        is_active: args.is_active,
-        rating: args.rating
+        username: freelancer.username,
+        email: freelancer.email,
+        full_name: freelancer.full_name,
+        bio: freelancer.bio,
+        profile_picture: freelancer.profile_picture,
+        joined_date: freelancer.joined_date,
+        last_login: freelancer.last_login,
+        is_active: freelancer.is_active,
+        earnings: freelancer.earnings,
+        rating: freelancer.rating,
+        status: freelancer.status,
       }
       return newFreelancer
     },
+    createService: (parent, { service }) => {
+      const newService = new Service({
+        title: service.title,
+        description: service.description,
+        category: service.category,
+        price: service.price,
+      });
+      return newService.save().then(result => {
+        console.log(result);
+        return result
+      }).catch(err => {
+        console.log(err);
+        throw err;
+      });
+    }
   },
 };
 
 const server = new ApolloServer({ typeDefs, resolvers });
 
 const app = express();
+
+mongoose.connect(`mongodb+srv://
+${process.env.MONGO_ATLAS_USER}:${process.env.MONGO_ATLAS_PW}
+@cluster0.y16icjh.mongodb.net/${process.env.MONGO_ATLAS_DB}?retryWrites=true&w=majority`)
+  .then(() => {
+    console.log('Connected to database')
+  })
+  .catch((err) => {
+    console.log(err)
+  });
 
 server.start().then(() => {
   server.applyMiddleware({ app });
