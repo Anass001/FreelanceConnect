@@ -1,6 +1,7 @@
 const express = require('express');
 const { ApolloServer, gql } = require('apollo-server-express');
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const Service = require('./models/service');
 
