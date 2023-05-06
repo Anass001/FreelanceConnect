@@ -1,0 +1,4 @@
+.Navigation{
+    display: flex;
+    flex-direction: column;
+}

@@ -2,9 +2,10 @@ const Category = require('../../models/category');
 
 module.exports = {
     Query: {
-        categories: async () => {
+        categories: async (_parent, args, req) => {
             try {
                 const categories = await Category.find();
+                console.log(categories)
                 return categories.map(category => {
                     return { ...category._doc, _id: category.id };
                 });
@@ -14,7 +15,8 @@ module.exports = {
         },
     },
     Mutation: {
-        createCategory: async (_parent, { category }) => {
+        createCategory: async (_parent, { category }, req) => {
+            if (!req.isAuth) throw new Error('Unauthenticated');
             const newCategory = new Category({
                 name: category.name,
                 description: category.description,

@@ -1,0 +1,110 @@
+.auth-login__wrapper .navbar {
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    /* padding: 0 20px;
+    height: 60px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26); */
+}
+
+.auth-login__wrapper .navbar__logo {
+    margin-right: 10px;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    user-select: none;
+    
+    background: linear-gradient(
+        to right,
+        #7953cd 20%,
+        #2DB67C 30%,
+        #59C173 70%,
+        #764ada 80%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* text-fill-color: transparent; */
+    background-size: 500% auto;
+    animation: textShine 5s ease-in-out infinite alternate;
+}
+
+.login__wrapper{
+    margin-left: 150px;
+}
+
+@keyframes textShine {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+.login {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 40px;
+    font-weight: 500;
+    margin-top: 120px;
+    margin-bottom: 60px;
+}
+
+.login__wrapper input {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-width: 0px 0px 1px 0px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    min-width: 400px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.login__wrapper input:focus {
+    border-color: #2DB67C;
+}
+
+.login__wrapper .signin-submit__button {
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Inter';
+    color: #2DB67C;
+    border: none;
+    border-radius: 4px;
+    min-width: 400px;
+    background-color: transparent;
+    margin-top: 30px;
+    border: solid 1px #2DB67C;
+    padding: 10px 20px;
+    cursor: pointer;
+    outline: none;
+    transition: box-shadow 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.login__wrapper .signin-submit__button:hover {
+    -moz-box-shadow: inset 0 0 0px 1px #2DB67C;
+    -webkit-box-shadow: inset 0 0 0px 1px #2DB67C;
+    box-shadow: inset 0 0 0px 1px #2DB67C;
+}
+
+.signup-link__wrapper {
+    display: flex;
+    margin-top: 20px;
+}
+
+.signup-link__wrapper p {
+    font-size: 14px;
+}
+
+.signup-link__wrapper a {
+    font-size: 14px;
+    color: #2DB67C;
+    text-decoration: none;
+    margin-left: 5px;
+}

@@ -13,7 +13,23 @@ const serviceSchema = new mongoose.Schema({
     price: {
         type: Number,
         required: true
-    }
+    },
+    freelancer: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    reviews: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Review'
+        }
+    ],
+    orders: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Order'
+        }
+    ],
 });
 
 module.exports = mongoose.model('Service', serviceSchema);

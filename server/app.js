@@ -6,8 +6,10 @@ const typeDefs = require('./graphql/schema/index')
 const resolvers = require('./graphql/resolvers/index');
 const server = new ApolloServer({ typeDefs, resolvers });
 
-const mongoose = require('mongoose'); 
+const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+
+const isAuth = require('./middleware/is-auth');
 
 mongoose.connect(`mongodb+srv://
 ${process.env.MONGO_ATLAS_USER}:${process.env.MONGO_ATLAS_PW}
@@ -19,9 +21,14 @@ ${process.env.MONGO_ATLAS_USER}:${process.env.MONGO_ATLAS_PW}
     console.log(err)
   });
 
-server.start().then(() => {
+async function startServer() {
+  app.use(isAuth);
+  await server.start();
   server.applyMiddleware({ app });
-  app.listen({ port: 4000 }, () =>
-    console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
-  );
-});
+}
+
+startServer();
+
+app.listen({ port: 4000 }, () =>
+  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+);

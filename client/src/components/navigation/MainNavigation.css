@@ -1,0 +1,109 @@
+header {
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    /* padding: 0 20px;
+    height: 60px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26); */
+}
+
+.main-navigation__search-container {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    margin-left: 10px;
+    padding: 7px;
+    padding-left: 20px;
+    color: #717C8F;
+    background: #F5F7FB;
+    border-radius: 4px;
+    margin-right: 70px;
+    transition: background-color 0.3s ease;
+}
+
+.main-navigation__logo {
+    margin-right: 10px;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 700;
+    color: #2DB67C;
+    font-size: 24px;
+    user-select: none;
+}
+
+ a{
+    text-decoration: none !important;
+    border-bottom: none !important;
+}
+
+.main-navigation__search-input {
+    flex: 1;
+    margin-right: 10px;
+    padding: 5px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    background-color: transparent;
+    font-size: 16px;
+    outline: none;
+    text-decoration: none !important;
+    border-bottom: none !important;
+    font-family: 'Inter', sans-serif;
+}
+
+.main-navigation__search-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    font-size: 16px;
+    color: #717c8f8c;
+    padding-right: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.main-navigation__search-button::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    background-color: #717c8f21;
+    border-radius: 50%;
+    transition: width 0.3s ease-out, height 0.3s ease-out;
+}
+
+
+.main-navigation__search-button:hover::before {
+    width: 68%;
+    height: 100%;
+}
+
+.main-navigation__search-container:focus-within {
+    background-color: #EBF1F7;
+}
+
+.main-navigation__user-dropdown {
+    display: none;
+}
+
+.main-navigation__nav-icons {
+    display: flex;
+    width: 180px;
+    justify-content: space-between;
+}
+
+.main-navigation__nav-icons a {
+    color: #C0C6D0;
+    text-decoration: none;
+    font-size: 18px;
+    transition: 0.3s ease;
+}
+
+.main-navigation__nav-icons a:hover {
+    color: #b2b8c3;
+}

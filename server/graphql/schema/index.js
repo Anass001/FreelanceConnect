@@ -5,12 +5,19 @@ module.exports = gql`
 type Query {
   services: [Service]!,
   categories: [Category]!,
+  login(email: String!, password: String!): AuthData!,
 },
 
 type Mutation {
   createUser(user: UserInput): User,
   createService(service: ServiceInput): Service,
   createCategory(category: CategoryInput): Category,
+},
+
+type AuthData {
+  userId: ID!,
+  token: String!,
+  tokenExpiration: Int!,
 },
 
 type Review {
@@ -85,6 +92,9 @@ type Service {
   description: String!,
   category: String!,
   price: Float!,
+  freelancer: User!,
+  reviews: [Review]!,
+  orders: [Order]!,
 },
 
 input ServiceInput {
@@ -95,7 +105,7 @@ input ServiceInput {
 },
 
 type Category{
-  id: ID!,
+  _id: ID!,
   name: String!,
   description: String!,
   services: [Service]!,
