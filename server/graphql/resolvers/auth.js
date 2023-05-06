@@ -5,12 +5,7 @@ module.exports = {
     Query: {
         login: async (_parent, { email, password }) => {
             const user = await User.findOne({ email: email });
-            if (!user) {
-                throw new Error('User does not exist!');
-            }
-            if (user.password !== password) {
-                throw new Error('Password is incorrect!');
-            }
+            if (!user || user.password !== password) throw new Error('Invalid credentials');
             const token = jwt.sign({
                 userId: user.id,
                 email: user.email,
@@ -26,16 +21,30 @@ module.exports = {
     },
     Mutation: {
         createUser: async (_parent, { user }) => {
-            const newUser = new User({
-                email: user.email,
-                username: user.username,
-                password: user.password,
-                full_name: user.full_name,
-                bio: user.bio,
-                profile_picture: user.profile_picture,
-                joined_date: Date.now(),
-            });
             try {
+                const existingUser = await User.findOne({
+                    $or: [
+                        { email: user.email },
+                        { username: user.username }
+                    ]
+                })
+                // const existingUser = await User.findOne({ $or: [user.email, user.username] });
+                if (existingUser) {
+                    if (existingUser.email === user.email) {
+                        throw new Error('Email already in use');
+                    } else if (existingUser.username === user.username) {
+                        throw new Error('Username already taken');
+                    }
+                }
+                const newUser = new User({
+                    email: user.email,
+                    username: user.username,
+                    password: user.password,
+                    full_name: user.full_name,
+                    bio: user.bio,
+                    profile_picture: user.profile_picture,
+                    joined_date: Date.now(),
+                });
                 const result = await newUser.save();
                 console.log(result);
                 return result;

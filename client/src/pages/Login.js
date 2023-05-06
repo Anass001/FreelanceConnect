@@ -7,6 +7,9 @@ class Login extends Component {
         super(props);
         this.emailInputRef = React.createRef();
         this.passwordInputRef = React.createRef();
+        this.state = {
+            error: ""
+        }
     }
 
     submitHandler = (event) => {
@@ -15,6 +18,7 @@ class Login extends Component {
         const password = this.passwordInputRef.current.value;
 
         if (email.trim().length === 0 || password.trim().length === 0) {
+            this.setState({ error: "Please fill all the fields" });
             return;
         }
 
@@ -46,6 +50,11 @@ class Login extends Component {
             })
             .then(resData => {
                 console.log(resData);
+                if (resData.errors) {
+                    this.setState({ error: resData.errors[0].message });
+                } else {
+                    this.setState({ error: "" });
+                }
                 if (resData.data.login.token) {
                     this.props.setToken(resData.data.login.token);
                 }
@@ -55,6 +64,10 @@ class Login extends Component {
             });
 
     };
+
+    clearError = () => {
+        this.setState({ error: "" });
+    }
 
     render() {
         return (
@@ -66,6 +79,16 @@ class Login extends Component {
                 </div>
                 <div className="login__wrapper">
                     <h2 className="login">Sign In</h2>
+                    {(this.state.error.trim().length !== 0) &&
+                        <div className="error-message__wrapper">
+                            <p className="error-message">{this.state.error.toString()}</p>
+                            <button className="close-button" onClick={this.clearError}>
+                                <span class="material-symbols-outlined" style={{ fontSize: 16 }}>
+                                    close
+                                </span>
+                            </button>
+                        </div>
+                    }
                     <form onSubmit={this.submitHandler}>
                         <label>
                             <input type="email" placeholder='Email' ref={this.emailInputRef} />

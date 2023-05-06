@@ -10,6 +10,10 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26); */
 }
 
+.login__wrapper form {
+    padding-top: 30px;
+}
+
 .auth-login__wrapper .navbar__logo {
     margin-right: 10px;
     font-family: 'Ubuntu', sans-serif;
@@ -50,7 +54,7 @@
     font-size: 40px;
     font-weight: 500;
     margin-top: 120px;
-    margin-bottom: 60px;
+    margin-bottom: 30px;
 }
 
 .login__wrapper input {

@@ -49,7 +49,7 @@
     font-size: 36px;
     font-weight: 500;
     margin-top: 60px;
-    margin-bottom: 60px;
+    margin-bottom: 30px;
 }
 
 .signup__wrapper input {
@@ -58,14 +58,26 @@
     border: 1px solid #ccc;
     border-width: 0px 0px 1px 0px;
     padding-bottom: 10px;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     min-width: 400px;
     box-sizing: border-box;
     outline: none;
 }
 
+.signup__wrapper label{
+    display: block;
+    margin-bottom: 30px;
+}
+
 .signup__wrapper input:focus {
     border-color: #2DB67C;
+}
+
+.info__validation{
+    font-size: 12px;
+    color: #ff000b;
+    margin-top: 5px;
+    margin-bottom: 20px;
 }
 
 .signup__wrapper .signup-submit__button {
@@ -99,10 +111,9 @@
     margin-left: -30px;
 }
 
-/* .signup__wrapper form {
-    display: flex;
-    flex-direction: column;
-} */
+.signup__wrapper form {
+    padding-top: 30px;
+}
 
 .signup__wrapper .signup-submit__button:hover {
     -moz-box-shadow: inset 0 0 0px 1px #2DB67C;
@@ -124,4 +135,35 @@
     color: #2DB67C;
     text-decoration: none;
     margin-left: 5px;
+}
+
+.error-message__wrapper {
+    display: flex;
+    max-width: 400px;
+    background-color: #ffdce0;
+    border: 1px solid rgb(255, 128, 128);
+    border-radius: 4px;
+    padding: 0px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.error-message__wrapper button{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: rgb(233 64 64);;
+    outline: none;
+    font-size: 16px;
+    padding: 12px;
+    position: relative;
+    overflow: hidden;
+    margin-left: -30px;
+}
+
+.error-message {
+    margin: 0px;
+    padding: 10px;
+    color: rgb(233 64 64);
+    font-size: 14px;
 }
