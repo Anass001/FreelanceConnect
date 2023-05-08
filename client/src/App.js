@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React from 'react';
 
-import Login from './pages/Login';
-import Home from './pages/Home';
-import Signup from './pages/Signup';
+import Login from './pages/Login/Login';
+import Home from './pages/Home/Home';
+import Signup from './pages/Signup/Signup';
 import MainNavigation from './components/navigation/MainNavigation';
 import Categories from './components/categories/Categories';
 import 'font-awesome/css/font-awesome.min.css';

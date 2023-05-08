@@ -98,7 +98,9 @@ class Login extends Component {
                             <input type="password" placeholder='Password' ref={this.passwordInputRef} />
                         </label>
                         <div>
-                            <button className='signin-submit__button' type="submit">Sign in</button>
+                            <NavLink to="/home" activeClassName="active-link">
+                                <button className='signin-submit__button' type="submit">Sign in</button>
+                            </NavLink>
                         </div>
                     </form>
                     <div className="signup-link__wrapper">
