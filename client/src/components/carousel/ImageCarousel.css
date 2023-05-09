@@ -1,0 +1,11 @@
+Slider img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.slick-prev:before, .slick-next:before{
+    color: #D8D8D8;
+}

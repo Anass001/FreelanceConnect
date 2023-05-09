@@ -1,0 +1,13 @@
+.rating__stars .fa{
+    color: #f8ce0b;
+    margin-right: 2px;
+}
+
+.rating__stars .disabled{
+    color: #cccccc72;
+}
+
+.rating{
+    display: flex;
+    align-items: center;
+}

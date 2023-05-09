@@ -1,11 +1,27 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "./MainNavigation.css";
+import Notifications from "../notifications/Notifications";
 
 const MainNavigation = () => {
     const handleUserDropdownClick = () => {
         // TODO: handle user dropdown click
     };
+
+    const notifications = [
+        {
+            message: "You have a new message from John Doe",
+            time: "2 hours ago",
+        },
+        {
+            message: "You have a new message from John Doe",
+            time: "2 hours ago",
+        },
+        {
+            message: "You have a new message from John Doe",
+            time: "2 hours ago",
+        },
+    ];
 
     return (
         <header>
@@ -26,9 +42,10 @@ const MainNavigation = () => {
                 <NavLink to="/messages" activeClassName="active-link">
                     <i className="fa fa-envelope" aria-hidden="true"></i>
                 </NavLink>
-                <NavLink to="/notifications" activeClassName="active-link">
-                    <i className="fa fa-bell" aria-hidden="true"></i>
-                </NavLink>
+                {/* <NavLink to="/notifications" activeClassName="active-link"> */}
+                    {/* <i className="fa fa-bell" aria-hidden="true"></i> */}
+                    <Notifications notifications={notifications} />
+                {/* </NavLink> */}
                 <NavLink to="/saved" activeClassName="active-link">
                     <i className="fa fa-heart" aria-hidden="true"></i>
                 </NavLink>

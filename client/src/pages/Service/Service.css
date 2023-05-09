@@ -1,0 +1,146 @@
+.service__wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.service__container{
+    display: flex;
+    flex-direction: column;
+    width: 65%;
+}
+
+.service-info__container {
+    border: 1px solid #E9EEF4;
+    border-radius: 8px;
+    padding: 30px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.service-freelancer__container {
+    display: flex;
+    flex-direction: column;
+    width: 24%;
+    border: 1px solid #E9EEF4;
+    border-radius: 8px;
+    padding: 30px;
+    margin-top: 30px;
+}
+
+.service-title {
+    padding: 0;
+    margin: 0;
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.service-info__container .rating {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.rating__count {
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+}
+
+.rating__value {
+    font-weight: 700;
+    color: #f8ce0b;
+}
+
+.rating__count {
+    color: #B2B2B2;
+}
+
+.service-info__description {
+    color: #898989;
+}
+
+.service-freelancer__avatar img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+.service-freelancer__info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.service-freelancer__personal-info-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+}
+
+.service-freelancer__name {
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+}
+
+.service-freelancer__level {
+    font-size: 16px;
+    color: #2DB67C;
+}
+
+.service-freelancer__description {
+    color: #898989;
+}
+
+.service-freelancer__hire-button{
+    width: 100%;
+    height: 50px;
+    background: linear-gradient(90deg, #2DB67C 0%, #38EF7D 100%);
+    border-radius: 4px;
+    border: none;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.service-freelancer__hire-button:hover{
+    background: linear-gradient(90deg, #35d492 0%, #4bf88d 100%);
+}
+
+.service-reviews__container{
+    border: 1px solid #E9EEF4;
+    border-radius: 8px;
+    padding: 20px 30px 30px 30px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.service-reviews__header{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    margin-bottom: 30px;
+}
+
+.service-reviews__title{
+    margin: 0;
+    padding: 0;
+}
+
+.service-reviews__count{
+    margin-left: 10px;
+    color: #B2B2B2;
+    font-size: 24px;
+}
+
+.service-image__carousel{
+    margin-bottom: 50px;
+    padding: 10px;
+}

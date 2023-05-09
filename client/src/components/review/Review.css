@@ -1,0 +1,31 @@
+.review__personal-info-wrapper img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.review__header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.review__personal-info-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.review__personal-info-wrapper .review__name{
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    font-weight: 500;
+    margin-left: 10px;
+}
+
+.review__description{
+    color: #898989;
+}

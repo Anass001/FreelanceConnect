@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import './Signup.css';
 import { useFormik } from 'formik';
 import { NavLink } from "react-router-dom";
@@ -53,7 +53,7 @@ function Signup() {
     }
 
     if(!error && data){
-        navigate('/');
+        navigate('/login');
     }
 
     const formik = useFormik({

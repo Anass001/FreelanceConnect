@@ -7,23 +7,23 @@ import Login from './pages/Login/Login';
 import Home from './pages/Home/Home';
 import Signup from './pages/Signup/Signup';
 import MainNavigation from './components/navigation/MainNavigation';
-import Categories from './components/categories/Categories';
 import 'font-awesome/css/font-awesome.min.css';
+import Service from './pages/Service/Service'
 
 
 function App() {
   const [token, setToken] = useState(null);
 
-  if (!token) {
-    return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-        </Routes>
-      </BrowserRouter>
-    )
-  }
+  // if (!token) {
+  //   return (
+  //     <BrowserRouter>
+  //       <Routes>
+  //       <Route path="/login" element={<Login />} />
+  //         <Route path="/signup" element={<Signup />} />
+  //       </Routes>
+  //     </BrowserRouter>
+  //   )
+  // }
   return (
     <div className="App">
       <BrowserRouter>
@@ -31,6 +31,7 @@ function App() {
           <MainNavigation />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/service" element={<Service />} />
           </Routes>
         </React.Fragment>
 
