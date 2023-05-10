@@ -30,6 +30,7 @@ const serviceSchema = new mongoose.Schema({
             ref: 'Order'
         }
     ],
+    images: [String]
 });
 
 module.exports = mongoose.model('Service', serviceSchema);

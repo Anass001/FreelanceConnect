@@ -1,7 +1,21 @@
 .service-card{
     border: 1px solid #E9EEF4;
     border-radius: 8px;
-    max-width: 350px;
+    /* max-width: 350px; */
+    width: 100%;
+    min-height: 420px;
+    display: flex;
+}
+
+.service-card__wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
+    height: 100%;
+}
+
+.service-card__body__wrapper{
+    flex-grow: 1;
 }
 
 .service-card__header__freelancer-info img{

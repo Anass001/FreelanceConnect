@@ -25,7 +25,7 @@ function Notifications({ notifications }) {
                     </div>
                     <div className="notification__body">
                         {notifications.map((notification) => (
-                            <Link to="/messages" className="notification__body__item">
+                            <Link to="/messages">
                                 <div className="notification__body__item">
                                     <div className="notification__body__item__content">
                                         <p className="notification__body__item__content__message">{notification.message}</p>

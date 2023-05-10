@@ -1,0 +1,74 @@
+.profile__wrapper {
+    display: flex;
+    /* flex-direction: row; */
+    /* align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 50px; */
+}
+
+.profile__wrapper .service-freelancer__container {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.services__grid__wrapper {
+    row-gap: 15px;
+}
+
+.profile__wrapper .service-reviews__container {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.profile__wrapper .service__container {
+    margin-top: 30px;
+    padding-left: 30px;
+}
+
+.service__container .service__title {
+    margin: 0;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.profile__wrapper .add-service-card {
+    background-color: #EAF8F2;
+    border: none;
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='8' ry='8' stroke='%232EC585' stroke-width='2' stroke-dasharray='20' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.add-service-card:hover {
+    background-color: #D9F2E8;
+}
+
+.add-service-card .material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 100,
+        'GRAD' -25,
+        'opsz' 48;
+    font-size: 96px;
+    color: #2EC585;
+}
+
+.add-service-card{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-service__title {
+    font-size: 16px;
+    color: #2EC585;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    text-decoration: none;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}

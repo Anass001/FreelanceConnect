@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports = {
     Query: {
-        login: async (_parent, { email, password }) => {
+        login: async (_parent, { email, password },_,info) => {
             const user = await User.findOne({ email: email });
             if (!user || user.password !== password) throw new Error('Invalid credentials');
             const token = jwt.sign({

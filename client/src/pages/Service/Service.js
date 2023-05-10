@@ -3,6 +3,7 @@ import './Service.css';
 import Rating from '../../components/rating/Rating';
 import Review from '../../components/review/Review';
 import ImageCarousel from '../../components/carousel/ImageCarousel';
+import Reviews from '../../components/reviews/Reviews';
 
 function Service() {
     return (
@@ -18,6 +19,7 @@ function Service() {
                         I will develop any web application in php framework Symfony
                     </div>
                 </div>
+                <Reviews serviceId="644d4d1ed52776eca053660f" />
                 <div className="service-reviews__container">
                     <div className="service-reviews__header">
                         <h1 className='service-reviews__title'>Reviews</h1>

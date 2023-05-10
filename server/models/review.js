@@ -18,4 +18,14 @@ const reviewSchema = new mongoose.Schema({
         required: true
     },
     date: String,
+    order: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Order'
+    },
+    service: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Service'
+    }
 });
+
+module.exports = mongoose.model('Review', reviewSchema);

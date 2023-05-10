@@ -9,44 +9,56 @@
     box-shadow: 0px 0px 10px 0px #0000001a;
 }
 
-.notification__header h3{
+.notification__header h3 {
     margin: 0;
     padding: 0;
 }
 
-.notification__header{
+.notification__header {
     margin: 20px;
 }
 
-.notification__icon .activated{
+.notification__icon {
+    color: #C0C6D0;
+    text-decoration: none;
+    font-size: 18px;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.notification__icon:hover {
+    color: #b2b8c3;
+}
+
+.notification__icon .activated {
     color: #2DB67C;
 }
 
-.notification__body__item{
+.notification__body__item {
     font-size: 16px;
-    color: #898989;  
-    padding: 10px 20px 10px 20px;
+    color: #898989;
+    padding: 15px;
 
 }
 
-.notification__body__item__content__message{
+.notification__body__item__content__message {
     padding: 0;
     margin: 0;
 }
 
-.notification__body__item__content__time p{
+.notification__body__item__content__time p {
     margin: 0;
     padding: 0;
 }
 
-.notification__body__item__content__time{
+.notification__body__item__content__time {
     font-size: 12px;
     color: #898989;
     padding: 0;
     margin: 10px 0px 0px 0px;
 }
 
-.notification__body__item:hover{
+.notification__body__item:hover {
     background-color: #f5f5f5;
     cursor: pointer;
 }

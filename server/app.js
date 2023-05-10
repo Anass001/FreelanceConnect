@@ -1,14 +1,20 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 
 const { ApolloServer, gql } = require('apollo-server-express');
 const typeDefs = require('./graphql/schema/index')
 const resolvers = require('./graphql/resolvers/index');
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({ typeDefs, resolvers},{
+    context: ({ req }) => {
+      console.log(req)
+    }
+}
+  );
 
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-
+var cookieParser = require('cookie-parser')
 const isAuth = require('./middleware/is-auth');
 
 mongoose.connect(`mongodb+srv://
@@ -22,6 +28,7 @@ ${process.env.MONGO_ATLAS_USER}:${process.env.MONGO_ATLAS_PW}
   });
 
 async function startServer() {
+  app.use(cors())
   app.use(isAuth);
   await server.start();
   server.applyMiddleware({ app });

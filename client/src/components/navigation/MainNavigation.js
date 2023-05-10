@@ -26,7 +26,7 @@ const MainNavigation = () => {
     return (
         <header>
             <NavLink to="/" activeClassName="active-link">
-                <div className="main-navigation__logo">FreelancerConnect</div>
+                <div className="main-navigation__logo">FreelanceConnect</div>
             </NavLink>
             <div className="main-navigation__search-container">
                 <input

@@ -6,12 +6,18 @@ type Query {
   services: [Service]!,
   categories: [Category]!,
   login(email: String!, password: String!): AuthData!,
+  reviewsByUserId(userId: ID!): [Review]!,
+  reviewsByServiceId(serviceId: ID!): [Review]!,
+  servicesByUserId(userId: ID!): [Service]!,
+  servicesByCategoryId(categoryId: ID!): [Service]!,
+  service(serviceId: ID!): Service!,
 },
 
 type Mutation {
   createUser(user: UserInput): User,
   createService(service: ServiceInput): Service,
   createCategory(category: CategoryInput): Category,
+  createReview(review: ReviewInput): Review,
 },
 
 type AuthData {
@@ -21,12 +27,24 @@ type AuthData {
 },
 
 type Review {
-  id: ID!,
+  _id: ID!,
   reviewer: User!,
   reviewee: User!,
   rating: Float!,
   content: String!,
   date: String!,
+  order: Order,
+  service: Service,
+},
+
+input ReviewInput {
+  reviewer: ID!,
+  reviewee: ID!,
+  rating: Float!,
+  content: String!,
+  date: String!,
+  order: ID,
+  service: ID,
 },
 
 type Notification {
@@ -51,7 +69,7 @@ type Message {
 },
 
 type User {
-  id: ID!,
+  _id: ID!,
   username: String!,
   email: String!,
   password: String!,
@@ -95,6 +113,7 @@ type Service {
   freelancer: User!,
   reviews: [Review]!,
   orders: [Order]!,
+  images: [String]!,
 },
 
 input ServiceInput {
@@ -102,6 +121,7 @@ input ServiceInput {
   description: String!,
   category: ID!,
   price: Float!,
+  images: [String]!,
 },
 
 type Category{
