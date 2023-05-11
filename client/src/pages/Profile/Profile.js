@@ -4,6 +4,7 @@ import { gql, useQuery } from '@apollo/client';
 import Reviews from '../../components/reviews/Reviews';
 import './Profile.css';
 import { Link } from 'react-router-dom';
+import defaultImage from '../../assets/images/default-user-image.png'
 
 const GET_SERVICES_BY_USER_ID = gql`
     query GetServicesByUserId($userId: ID!) {
@@ -17,6 +18,17 @@ const GET_SERVICES_BY_USER_ID = gql`
                 username
                 profile_picture
             }
+        }
+    }
+`;
+
+const GET_USER_BY_ID = gql`
+    query GetUserById($userId: ID!) {
+        user(userId: $userId) {
+            _id
+            username
+            profile_picture
+            bio
         }
     }
 `;
@@ -60,22 +72,45 @@ function Services(props) {
 }
 
 function Profile() {
+
+    // const isCurrentUser = props.userId === Cookies.get('userId');
+    const isCurrentUser = true;
+
+    const { loading, error, data } = useQuery(GET_USER_BY_ID, {
+        variables: { userId: "64588c572d6032dd97162aa6" },
+    }
+    );
+    if (loading) return 'Loading...';
+    if (error) return `Error! ${error.message}`;
+    if (data) console.log(data);
+
     return (
         <div className="profile__wrapper row">
             <div className="service-freelancer-info__container col-xs-12 col-sm-8 col-md-6 col-lg-3">
-                <div className="service-freelancer__container">
-                    <div className="service-freelancer__info">
-                        <div className="service-freelancer__avatar">
-                            <img src="https://via.placeholder.com/150" alt="avatar" />
+                {
+                    data.user &&
+                    <div className="service-freelancer__container">
+                        <div className="service-freelancer__info">
+                            <div className="service-freelancer__avatar">
+                                <img src={data.user.profile_picture || defaultImage} alt="avatar" />
+                            </div>
+                            <div className="service-freelancer__personal-info-wrapper">
+                                <h3 className="service-freelancer__name">{data.user.username}</h3>
+                                <div className="service-freelancer__level">Noob</div>
+                            </div>
+                            {isCurrentUser &&
+                                <div className="service-freelancer__edit-profile">
+                                    <Link to={`/profile/edit`}>
+                                        <span class="material-symbols-outlined">
+                                            edit
+                                        </span>
+                                    </Link>
+                                </div>
+                            }
                         </div>
-                        <div className="service-freelancer__personal-info-wrapper">
-                            <h3 className="service-freelancer__name">John Doe</h3>
-                            <div className="service-freelancer__level">Noob</div>
-                        </div>
+                        <div className="service-freelancer__description">{data.user.bio}</div>
                     </div>
-                    <div className="service-freelancer__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu ligula vel sapien aliquet faucibus. Curabitur bibendum sit amet metus non posuere. Proin dignissim, risus in pharetra faucibus, ipsum lectus pretium metus, nec congue nisi dolor vel augue. Vestibulum sodales nisi in felis porta, at dignissim libero pulvinar. Sed fringilla tellus bibendum ipsum gravida, scelerisque vehicula tortor varius. Donec at posuere risus. Curabitur porta, nisi sed semper faucibus, nulla purus sollicitudin augue, et maximus purus risus nec lectus. Sed quis urna porta, rhoncus neque quis, luctus lectus. In at mattis est, eu commodo nisi. Nullam finibus mollis risus, at aliquet elit fermentum eget. Donec dapibus vulputate enim.
-                    </div>
-                </div>
+                }
                 <Reviews userId="64588c572d6032dd97162aa6" />
             </div>
             <div className='service__container col-xs-12 col-sm-9 col-md-9 col-lg-9'>

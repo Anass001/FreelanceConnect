@@ -59,6 +59,7 @@
     display: flex;
     flex-direction: row;
     align-items: baseline;
+    /* width: 100%; */
     justify-content: flex-end;
     margin: 20px 15px 15px 15px;
 }
@@ -75,4 +76,8 @@
     margin-left: 5px;
     font-weight: 700;
     color: #2DB67C;
+}
+
+.service-card a{
+    width: 100%;
 }

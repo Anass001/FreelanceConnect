@@ -1,9 +1,33 @@
-/* .create-service__container form {
+.create-service__container form {
     display: flex;
     flex-direction: column;
 }
 
 .create-service__container form input {
+}
+
+.info__validation{
+    font-size: 12px;
+    color: #ff000b;
+    margin-top: 5px;
+}
+
+.create-service__container input {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+}
+
+.create-service__submit-button{
+    margin-top: 30px;
+}
+
+.input__container{
+    display: flex;
+    flex-direction: column;
     margin-bottom: 20px;
-    min-width: 400px;
-} */
+}
+
+.input__container label{
+    margin-bottom: 5px;
+    font-size: 12px;
+}

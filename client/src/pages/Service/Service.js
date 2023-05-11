@@ -20,17 +20,6 @@ function Service() {
                     </div>
                 </div>
                 <Reviews serviceId="644d4d1ed52776eca053660f" />
-                <div className="service-reviews__container">
-                    <div className="service-reviews__header">
-                        <h1 className='service-reviews__title'>Reviews</h1>
-                        <p className='service-reviews__count'>(12)</p>
-                    </div>
-                    <Review src="https://via.placeholder.com/150" name="John Doe" value={4.5}>
-                        <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu ligula vel sapien aliquet faucibus. Curabitur bibendum sit amet metus non posuere. Proin dignissim, risus in pharetra faucibus, ipsum lectus pretium metus, nec congue nisi dolor vel augue. Vestibulum sodales nisi in felis porta, at dignissim libero pulvinar. Sed fringilla tellus bibendum ipsum gravida, scelerisque vehicula tortor varius. Donec at posuere risus. Curabitur porta, nisi sed semper faucibus, nulla purus sollicitudin augue, et maximus purus risus nec lectus. Sed quis urna porta, rhoncus neque quis, luctus lectus. In at mattis est, eu commodo nisi. Nullam finibus mollis risus, at aliquet elit fermentum eget. Donec dapibus vulputate enim.
-                        </p>
-                    </Review>
-                </div>
             </div>
             <div className="service-freelancer__container">
                 <div className="service-freelancer__info">

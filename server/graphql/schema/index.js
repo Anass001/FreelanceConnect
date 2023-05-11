@@ -11,6 +11,7 @@ type Query {
   servicesByUserId(userId: ID!): [Service]!,
   servicesByCategoryId(categoryId: ID!): [Service]!,
   service(serviceId: ID!): Service!,
+  user(userId: ID!): User!,
 },
 
 type Mutation {

@@ -7,9 +7,17 @@
     margin-bottom: 50px; */
 }
 
+.service-freelancer__personal-info-wrapper{
+    flex-grow: 1;
+}
+
 .profile__wrapper .service-freelancer__container {
     width: 100%;
     box-sizing: border-box;
+}
+
+.service-freelancer__edit-profile .material-symbols-outlined{
+    color: #2EC585;
 }
 
 .services__grid__wrapper {
