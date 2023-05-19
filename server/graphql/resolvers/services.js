@@ -5,7 +5,7 @@ module.exports = {
     Query: {
         services: async () => {
             try {
-                const services = await Service.find();
+                const services = await Service.find().populate('freelancer', 'username profile_picture');
                 return services.map(service => {
                     return { ...service._doc, _id: service.id };
                 });
@@ -15,7 +15,7 @@ module.exports = {
         },
         service: async (_parent, { serviceId }) => {
             try {
-                const service = await Service.findById(serviceId);
+                const service = await Service.findById(serviceId).populate('freelancer', 'username profile_picture');
                 return { ...service._doc, _id: service.id };
             } catch (err) {
                 throw err;
@@ -37,6 +37,32 @@ module.exports = {
                 return services.map(service => {
                     return { ...service._doc, _id: service.id };
                 });
+            } catch (err) {
+                throw err;
+            }
+        },
+        servicesBySearchQuery: async (_parent, { searchQuery }) => {
+            try {
+                const services = await Service.aggregate([
+                    {
+                        $search: {
+                            "text": {
+                                "query": searchQuery,
+                                "path": ["title", "description"],
+                                "fuzzy": {
+                                    "maxEdits": 2,
+                                    "prefixLength": 3
+                                }
+                            }
+                        }
+                    }
+                ]);
+
+                const servicesWithFreelancer = await Service.populate(services, { path: "freelancer", select: "username profile_picture" });
+
+                return servicesWithFreelancer;
+
+                // return services;
             } catch (err) {
                 throw err;
             }

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import './CreateService.css';
 import { useFormik } from 'formik';
 import { useNavigate } from "react-router-dom";
 import { useMutation, gql, useQuery } from '@apollo/client';
+import ImageDropZone from '../../components/image-drop-zone/ImageDropZone';
 
 const validate = values => {
     const errors = {};
@@ -54,6 +55,17 @@ const GET_CATEGORIES = gql`
     }
 `;
 
+const MULTIPLE_UPLOAD = gql`
+    mutation MultipleUpload($files: [Upload!]!) {
+        multipleUpload(files: $files) {
+            filename
+            mimetype
+            encoding
+            cloudinaryUrl
+        }
+    }
+`;
+
 function CreateService() {
 
     const navigate = useNavigate();
@@ -62,8 +74,10 @@ function CreateService() {
 
     const { loading, error, data } = useQuery(GET_CATEGORIES);
 
+    const [multipleUpload, { data: multipleUploadData, loading: multipleUploadLoading, error: multipleUploadError, reset: multipleUploadReset }] = useMutation(MULTIPLE_UPLOAD);
+
     if (!serviceError && serviceData) {
-        navigate('/profile');
+        navigate('/user/');
     }
 
     const formik = useFormik({
@@ -71,15 +85,32 @@ function CreateService() {
             service_title: '',
             service_description: '',
             service_category: '',
-            service_images: '',
+            service_images: [],
             service_price: 0.00,
         },
         validate,
+        onChange: values => {
+            console.log(values);
+        },
         onSubmit: values => {
-            createService({ variables: { title: values.service_title, description: values.service_description, category: values.service_category, images: values.service_images, price: values.service_price } });
+
+            multipleUpload({ variables: { files: values.service_images } }).then((result) => {
+                const images = result.data.multipleUpload.map((image) => {
+                    return image.cloudinaryUrl;
+                });
+                createService({ variables: { title: values.service_title, description: values.service_description, category: values.service_category, images: images, price: values.service_price } });
+            });
+            
             serviceReset();
         },
     });
+
+    // if(uploadData){
+    //     const images = uploadData.multipleUpload.map((image) => {
+    //         return image.cloudinaryUrl;
+    //     });
+    //     createService({ variables: { title: formik.values.service_title, description: formik.values.service_description, category: formik.values.service_category, images: images, price: formik.values.service_price } });
+    // }
 
     return (
         <div className='create-service__container col-xs-12 col-sm-12 col-md-8 col-lg-6'>
@@ -101,9 +132,10 @@ function CreateService() {
                 </div>
                 <div className='input__container'>
                     <label htmlFor="service_description">Description</label>
-                    <input
+                    <textarea
                         id="service_description"
                         name="service_description"
+                        rows={10}
                         type="text"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
@@ -113,36 +145,32 @@ function CreateService() {
                         <p className="info__validation email__validation">{formik.errors.service_description}</p>
                     ) : null}
                 </div>
-                { data &&
+                {data &&
                     <div className='input__container'>
-                    <label htmlFor="service_category">Category</label>
-                    <select
-                        id="service_category"
-                        name="service_category"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.service_category}
-                    >
-                        <option value="" label="Select a category" />
-                        {data.categories.map((category) => (
-                            <option key={category._id} value={category._id} label={category.name} />
-                        ))}
-                    </select>
-                    {formik.touched.service_category && formik.errors.service_category ? (
-                        <p className="info__validation email__validation">{formik.errors.service_category}</p>
-                    ) : null}
-                </div>
+                        <label htmlFor="service_category">Category</label>
+                        <select
+                            id="service_category"
+                            name="service_category"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.service_category}
+                        >
+                            <option value="" label="Select a category" />
+                            {data.categories.map((category) => (
+                                <option key={category._id} value={category._id} label={category.name} />
+                            ))}
+                        </select>
+                        {formik.touched.service_category && formik.errors.service_category ? (
+                            <p className="info__validation email__validation">{formik.errors.service_category}</p>
+                        ) : null}
+                    </div>
                 }
                 <div className='input__container'>
                     <label htmlFor="service_images">Add Images</label>
-                    {/* upload images from device */}
-                    <input
-                        id="service_images"
-                        name="service_images"
-                        type="file"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.service_images}
+                    <ImageDropZone
+                        onDrop={useCallback(acceptedFiles => {
+                            formik.setFieldValue('service_images', acceptedFiles);
+                        }, [])}
                     />
                     {formik.touched.service_images && formik.errors.service_images ? (
                         <p className="info__validation email__validation">{formik.errors.service_images}</p>

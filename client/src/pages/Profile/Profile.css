@@ -80,3 +80,8 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
 }
+
+.service-freelancer__name{
+    text-decoration: none;
+    color: black;
+}

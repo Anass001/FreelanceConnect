@@ -1,9 +1,9 @@
-.create-service__container form {
+.create-order__container form {
     display: flex;
     flex-direction: column;
 }
 
-.create-service__container form input {
+.create-order__container form input {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -12,27 +12,20 @@
     font-size: 16px;
 }
 
-.create-service__container form input:focus {
+.service-card {
+    margin-bottom: 30px;
+}
+
+.create-order__container form input:focus {
     outline: none;
     border: 1px solid #2EC585;
 }
 
-.create-service__container form textarea {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    resize: none;
+.service-card__image__wrapper{
+    padding: 15px;
 }
 
-.create-service__container form textarea:focus {
-    outline: none;
-    border: 1px solid #2EC585;
-}
-
-.create-service__container form select {
+.create-order__container form select {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -41,18 +34,18 @@
     font-size: 16px;
 }
 
-.info__validation{
+.info__validation {
     font-size: 12px;
     color: #ff000b;
     margin-top: 5px;
 }
 
-.create-service__container input {
+.create-order__container input {
     font-family: 'Inter', sans-serif;
     font-size: 16px;
 }
 
-.create-service__submit-button{
+.create-order__submit-button {
     margin-top: 30px;
     font-size: 16px;
     font-weight: 500;
@@ -70,39 +63,39 @@
     cursor: pointer;
 }
 
-.create-service__submit-button:hover {
+.create-order__submit-button:hover {
     -moz-box-shadow: inset 0 0 0px 1px #2DB67C;
     -webkit-box-shadow: inset 0 0 0px 1px #2DB67C;
     box-shadow: inset 0 0 0px 1px #2DB67C;
 }
 
-.create-service__container{
+.create-order__container {
     display: flex;
     flex-direction: column;
-    margin-top: 30px;
     margin-bottom: 30px;
+    margin-top: 30px;
     width: 100%;
 }
 
-.input__container{
+.input__container {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
 }
 
-.input__container label{
+.input__container label {
     margin-bottom: 5px;
     font-size: 12px;
 }
 
-.image__preview__container{
+.image__preview__container {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
     margin-top: 20px;
 }
 
-.image__preview__container img{
+.image__preview__container img {
     max-width: 100px;
     max-height: 100px;
     object-fit: cover;

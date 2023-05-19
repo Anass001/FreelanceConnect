@@ -25,7 +25,7 @@ module.exports = {
     },
     Mutation: {
         createReview: async (_parent, { review }, req) => {
-            // if (!req.isAuth) throw new Error('Unauthenticated');
+            if (!req.isAuth) throw new Error('Unauthenticated');
             const newReview = new Review({
                 // TODO: userId should be included in token in order to be able to create a review
                 reviewer: review.reviewer,

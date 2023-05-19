@@ -1,4 +1,4 @@
-const {gql} = require('apollo-server-express');
+const { gql } = require('apollo-server-express');
 
 module.exports = gql`
 
@@ -11,7 +11,11 @@ type Query {
   servicesByUserId(userId: ID!): [Service]!,
   servicesByCategoryId(categoryId: ID!): [Service]!,
   service(serviceId: ID!): Service!,
+  servicesBySearchQuery(searchQuery: String!): [Service]!,
   user(userId: ID!): User!,
+  ordersByClientId(userId: ID!): [Order]!,
+  ordersByFreelancerId(userId: ID!): [Order]!,
+  orderById(orderId: ID!): Order!,
 },
 
 type Mutation {
@@ -19,7 +23,20 @@ type Mutation {
   createService(service: ServiceInput): Service,
   createCategory(category: CategoryInput): Category,
   createReview(review: ReviewInput): Review,
+  uploadPhoto(photo: String): String,
+  singleUpload(file: Upload!): File!,
+  multipleUpload(files: [Upload!]!): [File!]!,
+  createOrder(order: OrderInput): Order,
 },
+
+type File {
+    filename: String!,
+    mimetype: String!,
+    encoding: String!,
+    cloudinaryUrl: String!,
+},
+
+scalar Upload,
 
 type AuthData {
   userId: ID!,
@@ -111,6 +128,7 @@ type Service {
   description: String!,
   category: String!,
   price: Float!,
+  rating: Float!,
   freelancer: User!,
   reviews: [Review]!,
   orders: [Order]!,
@@ -139,7 +157,6 @@ input CategoryInput{
 
 enum OrderStatus {
 # TODO: make a state diagram for the order status to make sure it makes sense
-
   # order has been created but not yet accepted by the freelancer
   PENDING,
   # order has been accepted by the freelancer but not yet paid for by the client
@@ -157,7 +174,7 @@ enum OrderStatus {
 },
 
 type Order {
-  id: ID!,
+  _id: ID!,
   service: Service!,
   freelancer: User!,
   client: User!,
@@ -167,6 +184,17 @@ type Order {
   status: OrderStatus!,
   freelancer_review: Review,
   client_review: Review,
+  description: String,
+  chat: Chat,
+},
+
+input OrderInput {
+  service: ID!,
+  freelancer: ID!,
+  client: ID!,
+  price: Float!,
+  description: String,
+  deadline: String!,
 },
 
 type Chat{

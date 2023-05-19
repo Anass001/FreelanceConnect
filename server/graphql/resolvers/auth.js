@@ -3,15 +3,17 @@ const jwt = require('jsonwebtoken');
 
 module.exports = {
     Query: {
-        login: async (_parent, { email, password },_,info) => {
+        login: async (_parent, { email, password }, _, info) => {
             const user = await User.findOne({ email: email });
             if (!user || user.password !== password) throw new Error('Invalid credentials');
+            
             const token = jwt.sign({
                 userId: user.id,
                 email: user.email,
             }, 'my-private-key', {
                 expiresIn: '2h'
             });
+            
             return {
                 userId: user.id,
                 token: token,

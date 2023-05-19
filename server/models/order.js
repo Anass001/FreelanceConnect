@@ -29,3 +29,5 @@ const orderSchema = new mongoose.Schema({
         ref: 'Review'
     },
 });
+
+module.exports = mongoose.model('Order', orderSchema);

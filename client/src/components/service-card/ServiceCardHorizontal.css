@@ -1,0 +1,94 @@
+.service-card__horizontal{
+    border: 1px solid #E9EEF4;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    width: 100%;
+    display: flex;
+}
+
+.service-card__horizontal .service-card__wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: space-between;
+    height: 100%;
+}
+
+.service-card__horizontal .service-card__body__wrapper{
+    flex-grow: 1;
+}
+
+.service-card__horizontal .service-card__header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.service-card__horizontal .service-card__header__freelancer-info img{
+    width: 25px;
+    height: 25px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-left: 10px;
+}
+
+.service-card__horizontal .service-card__header__freelancer-info{
+    display: flex;
+    align-items: center;
+}
+
+.service-card__horizontal .service-card__header__freelancer-info p{
+    margin-left: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    width: 100%;
+    color: #717C8F;
+}
+
+.service-card__horizontal .service-card__image img{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.service-card__horizontal .service-card__image{
+    display: flex;
+}
+
+.service-card__horizontal .service-card__wrapper .rating{
+    margin: 10px 0 10px 15px;
+}
+
+.service-card__horizontal .service-card__title{
+    font-size: 18px;
+    color: black;
+    margin: 0px 0px 0px 15px;
+}
+
+.service-card__horizontal .service-card__price__wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    /* width: 100%; */
+    justify-content: flex-end;
+    margin: 20px 15px 15px 15px;
+}
+
+.service-card__horizontal .service-card__price__wrapper p{
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    color: #898989;
+}
+
+.service-card__horizontal .service-card__price{
+    font-size: 18px;
+    margin-left: 5px;
+    font-weight: 700;
+    color: #2DB67C;
+}
+
+.service-card__horizontal a{
+    width: 100%;
+}

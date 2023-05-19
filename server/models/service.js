@@ -30,7 +30,11 @@ const serviceSchema = new mongoose.Schema({
             ref: 'Order'
         }
     ],
-    images: [String]
+    images: [String],
+    rating: {
+        type: Number,
+        default: 0
+    }
 });
 
 module.exports = mongoose.model('Service', serviceSchema);

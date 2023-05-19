@@ -1,39 +1,103 @@
 import React from 'react';
 import './Service.css';
 import Rating from '../../components/rating/Rating';
-import Review from '../../components/review/Review';
 import ImageCarousel from '../../components/carousel/ImageCarousel';
 import Reviews from '../../components/reviews/Reviews';
+import { NavLink, useParams } from 'react-router-dom';
+import LoadingIndicator from '../../components/loading-indicator/LoadingIndicator';
+import { useQuery, gql } from '@apollo/client';
+import defaultImage from '../../assets/images/default-user-image.png';
+
+const GET_service_BY_ID = gql`
+    query GetServiceById($serviceId: ID!) {
+        service(serviceId: $serviceId) {
+            _id
+            title
+            description
+            price
+            images
+            rating
+            freelancer {
+                _id
+                username
+                profile_picture
+                bio
+            }
+            reviews {
+                _id
+                rating
+                content
+                reviewer {
+                    _id
+                    username
+                    profile_picture
+                }
+            }
+        }
+    }
+`;
 
 function Service() {
+
+    const { id } = useParams();
+
+    const { loading, error, data } = useQuery(GET_service_BY_ID, {
+        variables: { serviceId: id },
+    }
+    );
+    if (loading) return <LoadingIndicator />;
+    if (error) return `Error! ${error.message}`;
+    if (data) console.log(data);
+
     return (
         <div className="service__wrapper">
             <div className='service__container'>
                 <div className="service-info__container">
-                    <h1 className='service-title'>I will develop any web application in php framework Symfony</h1>
-                    <Rating value={3.5} count={12} />
+                    <h1 className='service-title'>
+                        {data.service.title}
+                    </h1>
+                    <Rating value={
+                        data.service.rating
+                    } count={
+                        data.service.reviews.length
+                    } />
                     <div className="service-image__carousel">
-                        <ImageCarousel slidesToShow={1} slidesToScroll={1} images={["https://via.placeholder.com/150", "https://via.placeholder.com/150", "https://via.placeholder.com/150"]} />
+                        <ImageCarousel slidesToShow={1} slidesToScroll={1} images={
+                            data.service.images
+                        } />
                     </div>
                     <div className="service-info__description">
-                        I will develop any web application in php framework Symfony
+                        {data.service.description}
                     </div>
                 </div>
-                <Reviews serviceId="644d4d1ed52776eca053660f" />
+                <Reviews serviceId={
+                    data.service._id
+                } />
             </div>
             <div className="service-freelancer__container">
-                <div className="service-freelancer__info">
-                    <div className="service-freelancer__avatar">
-                        <img src="https://via.placeholder.com/150" alt="avatar" />
+                <NavLink to={`/user/${data.service.freelancer._id}`} className="service-freelancer__link">
+                    <div className="service-freelancer__info">
+                        <div className="service-freelancer__avatar">
+                            <img src={
+                                data.service.freelancer.profile_picture ? data.service.freelancer.profile_picture : defaultImage
+                            } alt="avatar" />
+                        </div>
+                        <div className="service-freelancer__personal-info-wrapper">
+                            <h3 className="service-freelancer__name">{
+                                data.service.freelancer.username
+                            }</h3>
+                            <div className="service-freelancer__level">Noob</div>
+                        </div>
                     </div>
-                    <div className="service-freelancer__personal-info-wrapper">
-                        <h3 className="service-freelancer__name">John Doe</h3>
-                        <div className="service-freelancer__level">Noob</div>
-                    </div>
+                </NavLink>
+                <div className="service-freelancer__description">
+                    {
+                        data.service.freelancer.bio
+                    }
                 </div>
-                <div className="service-freelancer__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu ligula vel sapien aliquet faucibus. Curabitur bibendum sit amet metus non posuere. Proin dignissim, risus in pharetra faucibus, ipsum lectus pretium metus, nec congue nisi dolor vel augue. Vestibulum sodales nisi in felis porta, at dignissim libero pulvinar. Sed fringilla tellus bibendum ipsum gravida, scelerisque vehicula tortor varius. Donec at posuere risus. Curabitur porta, nisi sed semper faucibus, nulla purus sollicitudin augue, et maximus purus risus nec lectus. Sed quis urna porta, rhoncus neque quis, luctus lectus. In at mattis est, eu commodo nisi. Nullam finibus mollis risus, at aliquet elit fermentum eget. Donec dapibus vulputate enim.
-                </div>
-                <button className="service-freelancer__hire-button">Hire</button>
+                <NavLink to={`/create-order/${data.service._id}`}>
+                    <button className="service-freelancer__hire-button">Hire</button>
+                </NavLink>
             </div>
         </div>
     )

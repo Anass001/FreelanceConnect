@@ -1,17 +1,20 @@
-import './App.css';
-// import { useState } from 'react';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React from 'react';
-
-import Login from './pages/Login/Login';
-import Home from './pages/Home/Home';
-import Signup from './pages/Signup/Signup';
-import MainNavigation from './components/navigation/MainNavigation';
-import 'font-awesome/css/font-awesome.min.css';
-import Service from './pages/Service/Service';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Cookies from 'js-cookie';
-import Profile from './pages/Profile/Profile';
+import 'font-awesome/css/font-awesome.min.css';
+import './App.css';
+
+import MainNavigation from './components/navigation/MainNavigation';
 import CreateService from './pages/Service/CreateService';
+import CreateOrder from './pages/Order/CreateOrder';
+import Service from './pages/Service/Service';
+import Profile from './pages/Profile/Profile';
+import Signup from './pages/Signup/Signup';
+import Search from './pages/Search/Search';
+import Orders from './pages/Order/Orders';
+import Login from './pages/Login/Login';
+import Order from './pages/Order/Order';
+import Home from './pages/Home/Home';
 
 function App() {
 
@@ -22,8 +25,9 @@ function App() {
     return (
       <BrowserRouter>
         <Routes>
-        <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="*" element={<Login />} />
+          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/signup" element={<Signup />} />
         </Routes>
       </BrowserRouter>
     )
@@ -34,11 +38,15 @@ function App() {
         <React.Fragment>
           <MainNavigation />
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/service" element={<Service />} />
-            <Route path='/services/:id' element={<Service />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/create" element={<CreateService />} />
+            <Route exact path="/" element={<Home />} />
+            <Route exact path='/services/:id' element={<Service />} />
+            <Route exact path="/create-service" element={<CreateService />} />
+            <Route exact path="/user/:id" element={<Profile />} />
+            <Route exact path="/search/:query" element={<Search />} />
+            <Route exact path="/create-order/:id" element={<CreateOrder />} />
+            <Route exact path="/orders" element={<Orders />} />
+            <Route exact path="/orders/:id" element={<Order />} />
+            <Route path="*" element={<h1>Not Found</h1>} />
           </Routes>
         </React.Fragment>
 

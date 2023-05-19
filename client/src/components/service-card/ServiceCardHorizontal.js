@@ -1,13 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import './ServiceCard.css'
+import './ServiceCardHorizontal.css'
 import Rating from '../rating/Rating'
 import defaultImage from '../../assets/images/default-user-image.png'
 
-const ServiceCard = ({ service }) => {
-
+const ServiceCardHorizontal = ({ service }) => {
     return (
-        <div className="service-card">
+        <div className="service-card__horizontal">
             <Link to={`/services/${service._id}`}>
                 <div className='service-card__wrapper'>
                     <div className='service-card__body__wrapper'>
@@ -16,23 +15,19 @@ const ServiceCard = ({ service }) => {
                                 <img src={service.freelancer.profile_picture ? service.freelancer.profile_picture : defaultImage} alt={service.freelancer.username ? service.freelancer.username : ""} />
                                 <p>{service.freelancer.username ? service.freelancer.username : ""}</p>
                             </div>
+                            <Rating value={
+                                service.rating ? service.rating : 0
+                            } count={
+                                service.reviews ? service.reviews.length : 0
+                            } />
                         </div>
-                        <div className='service-card__image'>
-                            <img src={service.images[0] ? service.images[0] : ""} alt={service.name} />
-                        </div>
-                        <Rating value={
-                            service.rating ? service.rating : 0
-                        } count={
-                            service.reviews ? service.reviews.length : 0
-                        } />
                         <h3 className='service-card__title'>
-                            {service.description}
+                            {service.title ? service.title : ""}
                         </h3>
                     </div>
-                    <div className='service-card__price__wrapper'>
-                        <p>starting at</p>
-                        <div className='service-card__price'>
-                            ${service.price}
+                    <div className='service-card__image__wrapper'>
+                        <div className='service-card__image'>
+                            <img src={service.images[0] ? service.images[0] : ""} alt={service.name} />
                         </div>
                     </div>
                 </div>
@@ -41,4 +36,4 @@ const ServiceCard = ({ service }) => {
     )
 }
 
-export default ServiceCard
+export default ServiceCardHorizontal

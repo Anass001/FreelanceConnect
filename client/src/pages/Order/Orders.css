@@ -1,0 +1,47 @@
+.orders-table {
+  margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border-radius: 8px;
+}
+
+.orders-table th,
+.orders-table td {
+  text-align: left;
+  padding: 16px;
+}
+
+.orders-table th {
+  background-color: #4caf50;
+  color: white;
+}
+
+.orders-table td {
+  border-bottom: 1px solid #ddd;
+}
+
+.orders-table__freelancer-info img{
+    width: 25px;
+    height: 25px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.orders-table__freelancer-info{
+    display: flex;
+    align-items: center;
+}
+
+.orders-table tr:hover {
+  background-color: #ddd;
+}
+
+.orders-table tr {
+  cursor: pointer;
+}
+
+.orders-table tr a{
+    text-decoration: none;
+    color: #000;
+}

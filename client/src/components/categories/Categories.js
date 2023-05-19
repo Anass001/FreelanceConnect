@@ -8,6 +8,11 @@ const Categories = () => {
             <ul>
                 <li>
                     <NavLink to="/" activeClassName="active-link">
+                        <span>Home</span>
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to="/" activeClassName="active-link">
                         <span>Design</span>
                     </NavLink>
                 </li>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Categories from '../../components/categories/Categories';
 import ServiceCard from '../../components/service-card/ServiceCard';
 import { gql, useQuery } from '@apollo/client';
-import Cookies from 'js-cookie';
+import LoadingIndicator from '../../components/loading-indicator/LoadingIndicator';
 import './Home.css';
 
 // TODO: change to getServicesByCategory
@@ -12,15 +12,21 @@ const GET_SERVICES = gql`
             _id
             description
             price
+            images
+            freelancer {
+                _id
+                username
+                profile_picture
+            }
         }
     }
 `;
 
 function Services() {
     const { loading, error, data } = useQuery(GET_SERVICES);
-    if (loading) return 'Loading...';
+    if (loading) return <LoadingIndicator />
     if (error) return `Error! ${error.message}`;
-    if(data) console.log(data);
+    if (data) console.log(data);
     return (
         <div className="services__grid__wrapper row">
             {data.services.map((service) => (
@@ -33,11 +39,6 @@ function Services() {
 }
 
 class Home extends Component {
-
-    constructor(props) {
-        super(props);
-        // const { loading, error, data } = useQuery(GET_SERVICES);
-    }
 
     render() {
         return (

@@ -10,6 +10,11 @@ header {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26); */
 }
 
+.main-navigation__search-form{
+    display: flex;
+    flex-grow: 1;
+}
+
 .main-navigation__search-container {
     display: flex;
     align-items: center;
@@ -22,6 +27,16 @@ header {
     border-radius: 4px;
     margin-right: 70px;
     transition: background-color 0.3s ease;
+}
+
+.nav-link__wrapper{
+    display: flex;
+    align-items: center;
+}
+
+.nav-link__wrapper p{
+    margin: 0px 0px 0px 8px;
+    font-size: 16px;
 }
 
 .main-navigation__logo {

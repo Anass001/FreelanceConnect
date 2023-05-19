@@ -45,7 +45,9 @@ function Login() {
 
     if (!error && data) {
         Cookies.set('token', data.login.token, { expires: data.login.tokenExpiration});
+        Cookies.set('userId', data.login.userId, { expires: data.login.tokenExpiration});
         navigate('/');
+        window.location.reload();
     }
 
     const formik = useFormik({

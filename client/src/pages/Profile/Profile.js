@@ -5,6 +5,9 @@ import Reviews from '../../components/reviews/Reviews';
 import './Profile.css';
 import { Link } from 'react-router-dom';
 import defaultImage from '../../assets/images/default-user-image.png'
+import { useParams } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import LoadingIndicator from '../../components/loading-indicator/LoadingIndicator';
 
 const GET_SERVICES_BY_USER_ID = gql`
     query GetServicesByUserId($userId: ID!) {
@@ -35,14 +38,13 @@ const GET_USER_BY_ID = gql`
 
 function Services(props) {
 
-    // const isCurrentUser = props.userId === Cookies.get('userId');
-    const isCurrentUser = true;
+    const isCurrentUser = props.isCurrentUser;
 
     const { loading, error, data } = useQuery(GET_SERVICES_BY_USER_ID, {
         variables: { userId: props.userId },
     }
     );
-    if (loading) return 'Loading...';
+    if (loading) return <LoadingIndicator />;
     if (error) return `Error! ${error.message}`;
     if (data) console.log(data);
     return (
@@ -50,7 +52,7 @@ function Services(props) {
             {
                 isCurrentUser &&
                 <div className="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                    <Link to={`/create`}>
+                    <Link to={`/create-service`}>
                         <div className="service-card add-service-card">
                             <div className='service-card__wrapper'>
                                 <span class="material-symbols-outlined">
@@ -73,11 +75,12 @@ function Services(props) {
 
 function Profile() {
 
-    // const isCurrentUser = props.userId === Cookies.get('userId');
-    const isCurrentUser = true;
+    const { id } = useParams();
+
+    const isCurrentUser = id === Cookies.get('userId');
 
     const { loading, error, data } = useQuery(GET_USER_BY_ID, {
-        variables: { userId: "64588c572d6032dd97162aa6" },
+        variables: { userId: id },
     }
     );
     if (loading) return 'Loading...';
@@ -115,7 +118,7 @@ function Profile() {
             </div>
             <div className='service__container col-xs-12 col-sm-9 col-md-9 col-lg-9'>
                 <h1 className='service__title'>Services</h1>
-                <Services userId="64588c572d6032dd97162aa6" />
+                <Services userId={id} isCurrentUser={isCurrentUser} />
             </div>
         </div>
     );
