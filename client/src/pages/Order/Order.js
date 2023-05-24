@@ -2,6 +2,8 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, gql } from '@apollo/client';
 import ServiceCardHorizontal from '../../components/service-card/ServiceCardHorizontal';
+import SentMessage from '../../components/message/SentMessage';
+import { useMutation } from '@apollo/client';
 import './Order.css';
 
 const GET_ORDER = gql`
@@ -32,6 +34,31 @@ const GET_ORDER = gql`
     }
 `;
 
+const GET_CONVERSATION_BY_ORDER_ID = gql`
+    query getConversationByOrderId($orderId: ID!) {
+        conversationByOrderId(orderId: $orderId) {
+            _id
+            messages {
+                _id
+                body
+            }
+            users {
+                _id
+                username
+                profile_picture
+            }
+        }
+    }
+`;
+
+const SEND_MESSAGE = gql`
+    mutation sendMessage($conversation: ID!, $sender: ID!, $body: String!) {
+        sendMessage(message: {conversation: $conversation, sender: $sender, body: $body}) {
+            _id
+        }
+    }
+`;
+
 function getService(data) {
     if (data) {
         const service = { ...data.orderById.service };
@@ -41,11 +68,25 @@ function getService(data) {
     return null;
 }
 
+function getConversation(conversation) {
+    if (conversation)
+        return conversation.messages.map(message => {
+            <SentMessage message={message} />
+        }
+        )
+    return null;
+}
+
 function Order() {
 
     const orderId = useParams().id;
 
-    console.log(orderId);
+    const { loading: loadingConversation, error: errorConversation, data: dataConversation } = useQuery(GET_CONVERSATION_BY_ORDER_ID, {
+        variables: { orderId: orderId },
+    }
+    );
+
+    const [sendMessage] = useMutation(SEND_MESSAGE);
 
     const { loading, error, data } = useQuery(GET_ORDER, {
         variables: { orderId: orderId },
@@ -73,7 +114,6 @@ function Order() {
                 <div className='order__body'>
                     <div className='order__body__service'>
                         <div className='order__body__client'>
-                            <p>Anas Lamaiz has ordered this service</p>
                         </div>
                         <ServiceCardHorizontal service={getService(data)} />
                     </div>
@@ -117,10 +157,29 @@ function Order() {
                 </div>
                 <div className='order__chat'>
                     <div className='order__chat__container'>
+                        <div className='order__chat__messages'>
+                            {
+                                dataConversation &&
+                                getConversation(dataConversation.conversationByOrderId)
+                            }
+                        </div>
                     </div>
                     <div className='order__chat__input'>
                         <input type='text' placeholder='Type a message...' />
-                        <button className='order__chat__send-button'>
+                        <button
+                            onClick={
+                                () => {
+                                    sendMessage({
+                                        variables: {
+                                            // changes based on user state
+                                            conversation: dataConversation.conversationByOrderId._id,
+                                            sender: data.orderById.client._id,
+                                            body: 'Hello'
+                                        }
+                                    }).then(res => console.log(res))
+                                }
+                            }
+                            className='order__chat__send-button'>
                             <span class="material-symbols-outlined">
                                 send
                             </span>

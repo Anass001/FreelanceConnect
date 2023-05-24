@@ -8,5 +8,11 @@ const conversationSchema = new mongoose.Schema({
     messages: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Message'
-    }]
+    }],
+    order: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Order'
+    }
 });
+
+module.exports = mongoose.model('Conversation', conversationSchema);

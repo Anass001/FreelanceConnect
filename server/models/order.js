@@ -19,6 +19,10 @@ const orderSchema = new mongoose.Schema({
     },
     date: String,
     deadline: String,
+    conversation: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Conversation'
+    },
     price: Number,
     client_review: {
         type: mongoose.Schema.Types.ObjectId,

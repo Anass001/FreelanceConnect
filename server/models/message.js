@@ -6,15 +6,6 @@ const messageSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
-  recipient: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
-//   subject: {    
-//     type: String,
-//     required: true
-//   },
   body: {
     type: String,
     required: true
@@ -23,8 +14,11 @@ const messageSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  isRead: {
-    type: Boolean,
-    default: false
+  conversation: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Conversation',
+    required: true
   }
 });
+
+module.exports = mongoose.model('Message', messageSchema);

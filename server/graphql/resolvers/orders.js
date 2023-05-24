@@ -1,4 +1,5 @@
 const Order = require('../../models/order');
+const Conversation = require('../../models/conversation');
 
 module.exports = {
     Query: {
@@ -29,7 +30,8 @@ module.exports = {
                 const order = await Order.findById(orderId)
                     .populate('client', 'username profile_picture')
                     .populate('freelancer', 'username profile_picture')
-                    .populate('service', 'title description images rating');
+                    .populate('service', 'title description images rating')
+                    .populate('conversation', 'messages');
                 return { ...order._doc, _id: order._id };
             } catch (err) {
                 throw err;
@@ -52,6 +54,18 @@ module.exports = {
                     price: order.price,
                 });
                 const result = await newOrder.save();
+        
+
+                console.log("hello"+result._id)
+
+                const newConversation = new Conversation({
+                    users: [order.client, order.freelancer],
+                    order: result._id,
+                    messages: []
+                });
+
+                await newConversation.save();
+
                 return { ...result._doc, _id: result._id };
             } catch (err) {
                 throw err;

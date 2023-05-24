@@ -16,6 +16,7 @@ type Query {
   ordersByClientId(userId: ID!): [Order]!,
   ordersByFreelancerId(userId: ID!): [Order]!,
   orderById(orderId: ID!): Order!,
+  conversationByOrderId(orderId: ID!): Conversation!,
 },
 
 type Mutation {
@@ -27,6 +28,7 @@ type Mutation {
   singleUpload(file: Upload!): File!,
   multipleUpload(files: [Upload!]!): [File!]!,
   createOrder(order: OrderInput): Order,
+  sendMessage(message: MessageInput): Message,
 },
 
 type File {
@@ -73,17 +75,23 @@ type Notification {
 },
 
 type Conversation {
-  id: ID!,
+  _id: ID!,
   users: [User]!,
   messages: [Message]!,
 },
 
 type Message {
-  id: ID!,
-  conversation: Conversation!,
+  _id: ID!,
   sender: User!,
-  content: String!,
+  body: String!,
   date: String!,
+  conversation: ID!,
+},
+
+input MessageInput {
+  sender: ID!,
+  body: String!,
+  conversation: ID!,
 },
 
 type User {
@@ -184,6 +192,7 @@ type Order {
   status: OrderStatus!,
   freelancer_review: Review,
   client_review: Review,
+  conversation: Conversation,
   description: String,
   chat: Chat,
 },
@@ -202,10 +211,4 @@ type Chat{
   messages: [Message]!,
 },
 
-type Message{
-  id: ID!,
-  sender: User!,
-  content: String!,
-  timestamp: String!,
-},
 `
