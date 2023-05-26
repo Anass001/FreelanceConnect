@@ -7,7 +7,11 @@ const conversationSchema = new mongoose.Schema({
     }],
     messages: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Message'
+        ref: 'Message',
+        populate: {
+            path: 'sender',
+            select: '_id username profile_picture'
+        }
     }],
     order: {
         type: mongoose.Schema.Types.ObjectId,

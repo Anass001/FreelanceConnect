@@ -10,6 +10,7 @@ const GET_SERVICES_BY_QUERY = gql`
             _id
             description
             price
+            title
             images
             freelancer {
                 _id

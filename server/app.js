@@ -10,6 +10,13 @@ const resolvers = require('./graphql/resolvers/index');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 
+const { GraphQLWsLink } = require("@apollo/client/link/subscriptions");
+const { createClient } = require("graphql-ws");
+
+const wsLink = new GraphQLWsLink(createClient({
+  url: 'ws://localhost:4000/subscriptions',
+}));
+
 const server = new ApolloServer({ typeDefs, resolvers }, {
   context: ({ req }) => {
     console.log(req)

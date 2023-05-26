@@ -82,8 +82,7 @@
     justify-content: end;
 }
 
-.accept-order__button {
-    background: #2DB67C;
+.order__button {
     color: #fff;
     font-family: 'Inter', sans-serif;
     font-size: 16px;
@@ -98,27 +97,24 @@
     cursor: pointer;
 }
 
-.accept-order__button:hover {
+.accept-order__button,
+.complete-order__button {
+    background: #2DB67C;
+}
+
+.accept-order__button:hover,
+.complete-order__button:hover {
     background: #39bc85;
 }
 
-.decline-order__button {
+.decline-order__button,
+.cancel-order__button {
     background: #d54251;
-    color: #fff;
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    margin: 20px 10px 0 0;
-    font-weight: 500;
-    border: none;
-    border-radius: 4px;
-    min-width: 150px;
-    padding: 10px 20px;
-    cursor: pointer;
-    outline: none;
-    cursor: pointer;
+    margin-right: 10px;
 }
 
-.decline-order__button:hover {
+.decline-order__button:hover,
+.cancel-order__button:hover {
     background: #e04f5e;
 
 }
@@ -142,14 +138,14 @@
     box-sizing: border-box;
 }
 
-.order__chat__container{
+.order__chat__container {
     display: flex;
     flex-direction: column;
     height: 400px;
     overflow-y: scroll;
 }
 
-.order__chat__input{
+.order__chat__input {
     display: flex;
     flex-direction: row;
     margin-top: 20px;
@@ -157,7 +153,7 @@
     border-radius: 4px;
 }
 
-.order__chat__input input{
+.order__chat__input input {
     outline: none;
     font-size: 16px;
     font-family: 'Inter', sans-serif;
@@ -166,7 +162,7 @@
     padding-left: 10px;
 }
 
-.order__chat__input button{
+.order__chat__input button {
     color: #2DB67C;
     background: transparent;
     font-size: 16px;
@@ -176,4 +172,15 @@
     padding: 10px;
     cursor: pointer;
     outline: none;
+}
+
+.order__status__in-progress,
+.order__status__completed,
+.order__status__closed {
+    color: #2DB67C;
+}
+
+.order__status__declined,
+.order__status__cancelled {
+    color: #d54251;
 }

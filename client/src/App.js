@@ -7,6 +7,8 @@ import './App.css';
 import MainNavigation from './components/navigation/MainNavigation';
 import CreateService from './pages/Service/CreateService';
 import CreateOrder from './pages/Order/CreateOrder';
+import NotFound from './pages/NotFound/NotFound';
+import Category from './pages/Category/Category';
 import Service from './pages/Service/Service';
 import Profile from './pages/Profile/Profile';
 import Signup from './pages/Signup/Signup';
@@ -19,7 +21,6 @@ import Home from './pages/Home/Home';
 function App() {
 
   const token = Cookies.get('token');
-  console.log(token);
 
   if (!token) {
     return (
@@ -46,7 +47,8 @@ function App() {
             <Route exact path="/create-order/:id" element={<CreateOrder />} />
             <Route exact path="/orders" element={<Orders />} />
             <Route exact path="/orders/:id" element={<Order />} />
-            <Route path="*" element={<h1>Not Found</h1>} />
+            <Route exact path="/categories/:category" element={<Category />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </React.Fragment>
 

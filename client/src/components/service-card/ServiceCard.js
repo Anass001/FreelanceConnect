@@ -26,7 +26,7 @@ const ServiceCard = ({ service }) => {
                             service.reviews ? service.reviews.length : 0
                         } />
                         <h3 className='service-card__title'>
-                            {service.description}
+                            {service.title}
                         </h3>
                     </div>
                     <div className='service-card__price__wrapper'>

@@ -1,0 +1,25 @@
+.sent-message__user img {
+    width: 25px;
+    height: 25px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.received-message__wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.sent-message__content{
+    margin: 0;
+    padding: 5px;
+    background-color: #F5F7FB;
+    border-radius: 5px;
+    margin-left: 5px;
+    font-size: 14px;
+}

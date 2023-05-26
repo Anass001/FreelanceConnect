@@ -1,0 +1,33 @@
+.not-found__wrapper {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    height: 600px;
+}
+
+.not-found__wrapper p {
+    font-size: 24px;
+    margin: 0;
+    padding: 0;
+    color: #2DB67C;
+}
+
+.not-found__wrapper h1 {
+    font-weight: 700;
+    font-size: 164px;
+    user-select: none;
+    background: linear-gradient(to right,
+            #7953cd 20%,
+            #2DB67C 30%,
+            #59C173 70%,
+            #764ada 80%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* text-fill-color: transparent; */
+    background-size: 500% auto;
+    animation: textShine 15s ease-in-out infinite alternate;
+    margin: 0;
+    padding: 0;
+}

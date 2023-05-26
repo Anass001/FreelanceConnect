@@ -13,7 +13,6 @@
 
 .categories li {
     margin-right: 35px;
-    /* margin: 0 2rem; */
     font-family: 'Ubuntu', sans-serif;
     color: #9CA4B1;
     font-size: 18px;
@@ -25,7 +24,7 @@
 }
 
 .categories .active {
-    color: #2DB67C;
+    /* color: #2DB67C; */
 }
 
 .categories li a {
@@ -35,6 +34,7 @@
     display: block;
     position: relative;
     padding: 0.2em 0;
+    /* color: #2DB67C; */
     overflow: hidden;
 }
 
@@ -51,8 +51,15 @@
     transition: opacity 300ms, transform 300ms;
 }
 
-.categories li a:hover::after,
-.categories li a:focus::after {
+.active-link{
+    color: #2DB67C;
+}
+
+.inactive-link{
+    color: #9CA4B1;
+}
+
+.categories li a.active-link::after{
     opacity: 1;
     transform: translate3d(0, 0, 0);
 }

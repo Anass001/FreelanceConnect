@@ -1,19 +1,15 @@
 import React, { Component } from 'react';
 import Categories from '../../components/categories/Categories';
-// import ServiceCard from '../../components/service-card/ServiceCard';
+import ServiceCard from '../../components/service-card/ServiceCard';
 import { gql, useQuery } from '@apollo/client';
 import LoadingIndicator from '../../components/loading-indicator/LoadingIndicator';
-import './Home.css';
-import { Suspense } from 'react';
+import '../Home/Home.css';
+import { NavLink, useParams } from 'react-router-dom';
 
-const ServiceCard = React.lazy(() => import('./../../components/service-card/ServiceCard'));
-
-// TODO: change to getServicesByCategory
-const GET_SERVICES = gql`
-    query GetServices {
-        services {
+const GET_SERVICES_BY_CATEGORY = gql`
+    query GetServicesByCategory($category: String!) {
+        servicesByCategory(category: $category) {
             _id
-            title
             description
             price
             images
@@ -27,23 +23,26 @@ const GET_SERVICES = gql`
 `;
 
 function Services() {
-    const { loading, error, data } = useQuery(GET_SERVICES);
+
+    const { category } = useParams();
+
+    const { loading, error, data } = useQuery(GET_SERVICES_BY_CATEGORY, {
+        variables: { category: category },
+    });
     if (loading) return <LoadingIndicator />
     if (error) return `Error! ${error.message}`;
     return (
         <div className="services__grid__wrapper row">
-            {data.services.map((service) => (
+            {data.servicesByCategory.map((service) => (
                 <div className="col-xs-12 col-sm-8 col-md-6 col-lg-3">
-                    <Suspense fallback={<div> Please Wait... </div>} >
-                        <ServiceCard key={service._id} service={service} />
-                    </Suspense>
+                    <ServiceCard key={service._id} service={service} />
                 </div>
             ))}
         </div>
     );
 }
 
-function Home() {
+function Category() {
     return (
         <div>
             <Categories />
@@ -52,4 +51,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default Category;

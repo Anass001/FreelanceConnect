@@ -33,7 +33,7 @@ function Orders() {
 
     return (
         <div>
-            <h1>Orders</h1>
+            <h1 className='orders__header__title'>Orders</h1>
             {(ordersData) && <div className="orders-table__wrapper">
                 <table className="orders-table">
                     <tbody>

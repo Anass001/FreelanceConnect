@@ -54,7 +54,7 @@ const MainNavigation = () => {
 
     return (
         <header>
-            <NavLink to="/" activeClassName="active-link">
+            <NavLink to="/" className="active-link">
                 <div className="main-navigation__logo">FreelanceConnect</div>
             </NavLink>
             <form
@@ -90,9 +90,9 @@ const MainNavigation = () => {
                 {/* <NavLink to="/saved" activeClassName="active-link">
                     <i className="fa fa-heart" aria-hidden="true"></i>
                 </NavLink> */}
-                <NavLink to="/orders" activeClassName="active-link">
-                    <div class="nav-link__wrapper">
-                        <span class="material-symbols-outlined">
+                <NavLink to="/orders" className="active-link">
+                    <div className="nav-link__wrapper">
+                        <span className="material-symbols-outlined">
                             receipt_long
                         </span>
                         <p>Orders</p>

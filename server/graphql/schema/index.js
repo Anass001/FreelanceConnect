@@ -9,7 +9,7 @@ type Query {
   reviewsByUserId(userId: ID!): [Review]!,
   reviewsByServiceId(serviceId: ID!): [Review]!,
   servicesByUserId(userId: ID!): [Service]!,
-  servicesByCategoryId(categoryId: ID!): [Service]!,
+  servicesByCategory(category: String!): [Service]!,
   service(serviceId: ID!): Service!,
   servicesBySearchQuery(searchQuery: String!): [Service]!,
   user(userId: ID!): User!,
@@ -29,6 +29,11 @@ type Mutation {
   multipleUpload(files: [Upload!]!): [File!]!,
   createOrder(order: OrderInput): Order,
   sendMessage(message: MessageInput): Message,
+  updateOrderStatus(orderId: ID!, status: String!): Order,
+},
+
+type Subscription {
+  messageSent(conversationId: ID!): Message,
 },
 
 type File {
@@ -168,12 +173,10 @@ enum OrderStatus {
   # order has been created but not yet accepted by the freelancer
   PENDING,
   # order has been accepted by the freelancer but not yet paid for by the client
-  ACCEPTED,
-  # order has been paid for by the client but not yet completed by the freelancer
-  PAID,
-  # order has been completed by the freelancer but not yet accepted by the client
-  COMPLETED,
+  IN_PROGRESS,
   # order has been completed by the freelancer and accepted by the client
+  COMPLETED,
+  # order has been completed by the freelancer and paid by the client
   CLOSED,
   # order has been cancelled by the client
   CANCELLED,

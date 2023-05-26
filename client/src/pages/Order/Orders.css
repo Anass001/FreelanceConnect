@@ -1,3 +1,8 @@
+.orders__header__title{
+  margin: 60px 0 0 0;
+  padding: 0px;
+}
+
 .orders-table {
   margin-top: 20px;
   width: 100%;
@@ -26,6 +31,10 @@
     height: 25px;
     object-fit: cover;
     border-radius: 50%;
+}
+
+.order__header__status{
+  user-select: none;
 }
 
 .orders-table__freelancer-info{

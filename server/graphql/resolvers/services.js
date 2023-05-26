@@ -1,5 +1,6 @@
 const Service = require('../../models/service');
 const User = require('../../models/user');
+const Category = require('../../models/category');
 
 module.exports = {
     Query: {
@@ -31,12 +32,20 @@ module.exports = {
                 throw err;
             }
         },
-        servicesByCategoryId: async (_parent, { categoryId }) => {
+        servicesByCategory: async (_parent, { category }) => {
             try {
-                const services = await Service.find({ category: categoryId }).populate('freelancer', 'username profile_picture');
-                return services.map(service => {
-                    return { ...service._doc, _id: service.id };
-                });
+                const categoryDocument = await Category.findOne({ name: category });
+
+                if (!categoryDocument) {
+                    // Category not found
+                    return [];
+                }
+
+                // Find services with the matching category ID
+                const services = await Service.find({ category: categoryDocument._id })
+                    .populate('freelancer', 'username profile_picture');
+
+                return services;
             } catch (err) {
                 throw err;
             }

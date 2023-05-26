@@ -70,6 +70,16 @@ module.exports = {
             } catch (err) {
                 throw err;
             }
+        },
+        updateOrderStatus: async (_parent, { orderId, status }) => {
+            try {
+                const order = await Order.findById(orderId);
+                order.status = status;
+                const result = await order.save();
+                return { ...result._doc, _id: result._id };
+            } catch (err) {
+                throw err;
+            }
         }
     }
 };
