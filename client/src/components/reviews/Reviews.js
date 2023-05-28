@@ -54,8 +54,10 @@ function Reviews(props) {
                 <h1 className='service-reviews__title'>Reviews</h1>
                 <p className='service-reviews__count'>({reviews.length})</p>
             </div>
-            {reviews.map((review) => (        
-                <Review src={review.reviewer.profile_picture} name={review.reviewer.username} value={review.rating}>
+            {reviews.map((review) => (
+                <Review
+                    key={review._id}
+                    src={review.reviewer.profile_picture} name={review.reviewer.username} value={review.rating}>
                     <p>
                         {review.content}
                     </p>
