@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Cookies from 'js-cookie';
 import 'font-awesome/css/font-awesome.min.css';
 import './App.css';
+import UserContext from './UserContext';
+import { gql, useQuery } from '@apollo/client';
 
 import MainNavigation from './components/navigation/MainNavigation';
 import CreateService from './pages/Service/CreateService';
@@ -17,6 +19,57 @@ import Orders from './pages/Order/Orders';
 import Login from './pages/Login/Login';
 import Order from './pages/Order/Order';
 import Home from './pages/Home/Home';
+
+const GET_USER_BY_TOKEN = gql`
+  query GetUserByToken($token: String!) {
+    getUserByToken(token: $token) {
+        _id
+        username
+        profile_picture
+    }
+  }
+`;
+
+function MainWrapper({ token }) {
+
+  const { data } = useQuery(GET_USER_BY_TOKEN, {
+    variables: { token: token },
+  });
+
+  return (
+    <div className="App">
+      {
+        data && (
+          <UserContext.Provider value={{
+            token: token,
+            userId: data.getUserByToken._id,
+            username: data.getUserByToken.username,
+            profilePicture: data.getUserByToken.profile_picture,
+          }}>
+            <BrowserRouter>
+              <React.Fragment>
+                <MainNavigation />
+                <Routes>
+                  <Route exact path="/" element={<Home />} />
+                  <Route exact path='/services/:id' element={<Service />} />
+                  <Route exact path="/create-service" element={<CreateService />} />
+                  <Route exact path="/user/:id" element={<Profile />} />
+                  <Route exact path="/search/:query" element={<Search />} />
+                  <Route exact path="/create-order/:id" element={<CreateOrder />} />
+                  <Route exact path="/orders" element={<Orders />} />
+                  <Route exact path="/orders/:id" element={<Order />} />
+                  <Route exact path="/categories/:category" element={<Category />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </React.Fragment>
+            </BrowserRouter>
+          </UserContext.Provider>
+        )
+      }
+    </div>
+  );
+}
+
 
 function App() {
 
@@ -33,28 +86,11 @@ function App() {
       </BrowserRouter>
     )
   }
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <React.Fragment>
-          <MainNavigation />
-          <Routes>
-            <Route exact path="/" element={<Home />} />
-            <Route exact path='/services/:id' element={<Service />} />
-            <Route exact path="/create-service" element={<CreateService />} />
-            <Route exact path="/user/:id" element={<Profile />} />
-            <Route exact path="/search/:query" element={<Search />} />
-            <Route exact path="/create-order/:id" element={<CreateOrder />} />
-            <Route exact path="/orders" element={<Orders />} />
-            <Route exact path="/orders/:id" element={<Order />} />
-            <Route exact path="/categories/:category" element={<Category />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </React.Fragment>
 
-      </BrowserRouter>
-    </div>
+  return (
+    <MainWrapper token={token} />
   );
+
 }
 
 export default App;
