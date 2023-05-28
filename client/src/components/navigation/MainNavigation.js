@@ -1,10 +1,10 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "./MainNavigation.css";
-import Notifications from "../notifications/Notifications";
 import UserOptions from "../user-options/UserOptions";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const validate = values => {
     const errors = {};
@@ -15,28 +15,28 @@ const validate = values => {
 };
 
 const MainNavigation = () => {
-    const handleUserDropdownClick = () => {
-        // TODO: handle user dropdown click
-    };
+    // const handleUserDropdownClick = () => {
+    //     // TODO: handle user dropdown click
+    // };
 
     // react hook for navigation
     const navigate = useNavigate();
 
 
-    const notifications = [
-        {
-            message: "You have a new message from John Doe",
-            time: "2 hours ago",
-        },
-        {
-            message: "You have a new message from John Doe",
-            time: "2 hours ago",
-        },
-        {
-            message: "You have a new message from John Doe",
-            time: "2 hours ago",
-        },
-    ];
+    // const notifications = [
+    //     {
+    //         message: "You have a new message from John Doe",
+    //         time: "2 hours ago",
+    //     },
+    //     {
+    //         message: "You have a new message from John Doe",
+    //         time: "2 hours ago",
+    //     },
+    //     {
+    //         message: "You have a new message from John Doe",
+    //         time: "2 hours ago",
+    //     },
+    // ];
 
     const formik = useFormik({
         initialValues: {
@@ -51,6 +51,8 @@ const MainNavigation = () => {
             navigate(`/search/${values.search_query}`);
         },
     });
+
+    const isFreelancer = Cookies.get('isFreelancer') === 'true';
 
     return (
         <header>
@@ -90,14 +92,28 @@ const MainNavigation = () => {
                 {/* <NavLink to="/saved" activeClassName="active-link">
                     <i className="fa fa-heart" aria-hidden="true"></i>
                 </NavLink> */}
-                <NavLink to="/orders" className="active-link">
+                {
+                    isFreelancer ? (
+                        <NavLink to="/orders" className="active-link">
+                            <div className="nav-link__wrapper">
+                                <span className="material-symbols-outlined">
+                                    receipt_long
+                                </span>
+                                <p>Orders</p>
+                            </div>
+                        </NavLink>
+                    ) : (
+                        <div></div>
+                    )
+                }
+                {/* <NavLink to="/orders" className="active-link">
                     <div className="nav-link__wrapper">
                         <span className="material-symbols-outlined">
                             receipt_long
                         </span>
                         <p>Orders</p>
                     </div>
-                </NavLink>
+                </NavLink> */}
                 {/* <a href="/" onClick={handleUserDropdownClick}>
                     <i className="fa fa-user" aria-hidden="true"></i> */}
                 {/* <div className="main-navigation__user-dropdown">
