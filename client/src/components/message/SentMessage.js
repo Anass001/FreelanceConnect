@@ -1,16 +1,14 @@
-
 import defaultImage from '../../assets/images/default-user-image.png';
-import './SentMessage.css';
+import './Message.css';
 
-function SentMessage(props) {
+function SentMessage({ message, user }) {
     return (
-        <div className='sent-message__wrapper'>
-            <div className='sent-message__container'>
-                <p className='sent-message__content'>{props.message.body}</p>
-                {/* <p className='sent-message__date'>{new Date(message.date).toLocaleDateString()}</p> */}
+        <div className='message__wrapper message-sent'>
+            <div className='message__container message-sent'>
+                <p className='message__content message-sent'>{message.body}</p>
             </div>
-            <div className='sent-message__user'>
-                <img src={props.message.sender.profile_picture ? props.message.sender.profile_picture : defaultImage} alt={props.message.sender.username} />
+            <div className='message__user message-sent'>
+                <img src={user.profile_picture ? user.profile_picture : defaultImage} alt={user.username} />
             </div>
         </div>
     )

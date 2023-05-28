@@ -1,15 +1,14 @@
-import React from 'react';
 import defaultImage from '../../assets/images/default-user-image.png';
+import './Message.css';
 
-function ReceivedMessage(props) {
+function ReceivedMessage({ message, user }) {
     return (
-        <div className='received-message__wrapper'>
-            <div className='sent-message__user'>
-            <img src={props.message.sender.profile_picture ? props.message.sender.profile_picture : defaultImage} alt={props.message.sender.username} />
+        <div className='message__wrapper message-received'>
+            <div className='message__container message-received'>
+                <p className='message__content message-received'>{message.body}</p>
             </div>
-            <div className='sent-message__container'>
-                <p className='sent-message__content'>{props.smessage.content}</p>
-                {/* <p className='sent-message__date'>{new Date(message.date).toLocaleDateString()}</p> */}
+            <div className='message__user message-received'>
+                <img src={user.profile_picture ? user.profile_picture : defaultImage} alt={user.username} />
             </div>
         </div>
     )
