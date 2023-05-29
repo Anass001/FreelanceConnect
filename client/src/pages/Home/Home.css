@@ -1,4 +1,5 @@
-.services__grid__wrapper{
-    
+@media (max-width: 768px) {
+    .categories{
+        display: none;
+    }
 }
-

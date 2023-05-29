@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Categories from '../../components/categories/Categories';
-// import ServiceCard from '../../components/service-card/ServiceCard';
 import { gql, useQuery } from '@apollo/client';
 import LoadingIndicator from '../../components/loading-indicator/LoadingIndicator';
 import './Home.css';
 import { Suspense } from 'react';
-
 const ServiceCard = React.lazy(() => import('./../../components/service-card/ServiceCard'));
 
 // TODO: change to getServicesByCategory
@@ -22,6 +20,16 @@ const GET_SERVICES = gql`
                 username
                 profile_picture
             }
+        }
+    }
+`;
+
+const GET_CATEGORIES = gql`
+    query GetCategories {
+        categories {
+            _id
+            name
+            url_name
         }
     }
 `;
@@ -44,9 +52,14 @@ function Services() {
 }
 
 function Home() {
+
+    const { data } = useQuery(GET_CATEGORIES);
+
     return (
         <div>
-            <Categories />
+            {
+                data && <Categories categories={data.categories} />
+            }
             <Services />
         </div>
     );
