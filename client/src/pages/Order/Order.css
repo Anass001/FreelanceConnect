@@ -38,11 +38,6 @@
     flex-direction: row;
 }
 
-.order__body__details__description {
-    margin-left: 100px;
-}
-
-
 .order__body__details {
     display: flex;
     flex-direction: column;
@@ -80,13 +75,13 @@
 .order__actions {
     display: flex;
     justify-content: end;
+    margin-top: 20px;
 }
 
 .order__button {
     color: #fff;
     font-family: 'Inter', sans-serif;
     font-size: 16px;
-    margin-top: 20px;
     font-weight: 500;
     border: none;
     border-radius: 4px;
@@ -100,6 +95,7 @@
 .accept-order__button,
 .complete-order__button {
     background: #2DB67C;
+    margin: 5px;
 }
 
 .accept-order__button:hover,
@@ -110,14 +106,21 @@
 .decline-order__button,
 .cancel-order__button {
     background: #d54251;
-    margin-right: 10px;
+    margin: 5px;
 }
 
 .decline-order__button:hover,
 .cancel-order__button:hover {
     background: #e04f5e;
-
 }
+
+/* @media only screen and (min-width: 768px) {
+
+    .decline-order__button,
+    .cancel-order__button {
+        margin-right: 10px;
+    }
+} */
 
 .order__body__details__description .order__body__details__item__content {
     color: #666363;
@@ -125,7 +128,6 @@
     padding: 8px;
     border-radius: 4px;
     border: 1px solid #dad5d5;
-    min-width: 400px;
 }
 
 .order__chat {
