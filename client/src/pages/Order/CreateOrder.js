@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './CreateOrder.css';
 import { useFormik } from 'formik';
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, gql, useQuery } from '@apollo/client';
-import Cookies from 'js-cookie';
+import UserContext from '../../UserContext';
 import ServiceCardHorizontal from '../../components/service-card/ServiceCardHorizontal';
 
 const validate = values => {
@@ -47,6 +47,8 @@ function CreateOrder(props) {
 
     const serviceId = useParams().id;
 
+    const userId = useContext(UserContext).userId;
+
     const { loading: serviceLoading, error: serviceError, data: serviceData } = useQuery(GET_SERVICE, {
         variables: { serviceId: serviceId },
     });
@@ -67,7 +69,7 @@ function CreateOrder(props) {
             console.log(values);
         },
         onSubmit: values => {
-            createOrder({ variables: { serviceId: serviceId, price: values.order_price, deadline: values.order_deadline, freelancerId: serviceData.service.freelancer._id, clientId: Cookies.get('userId') } });
+            createOrder({ variables: { serviceId: serviceId, price: values.order_price, deadline: values.order_deadline, freelancerId: serviceData.service.freelancer._id, clientId: userId } });
 
             orderReset();
         },
