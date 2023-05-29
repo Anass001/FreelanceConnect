@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, gql, useSubscription } from '@apollo/client';
 import ServiceCardHorizontal from '../../components/service-card/ServiceCardHorizontal';
 import SentMessage from '../../components/message/SentMessage';
 import { useMutation } from '@apollo/client';
@@ -9,6 +9,9 @@ import { useState } from 'react';
 import Cookies from 'js-cookie';
 import ReceivedMessage from '../../components/message/ReceivedMessage';
 import { formatDate } from '../../utils/FormatUtils';
+import { useRef } from 'react';
+import { useContext } from 'react';
+import UserContext from '../../UserContext';
 
 const GET_ORDER = gql`
     query getOrder($orderId: ID!) {
@@ -79,9 +82,8 @@ const UPDATE_ORDER_STATUS = gql`
 `;
 
 const MESSAGE_SUBSCRIPTION = gql`
-    subscription messageSent($conversation: ID!) {
-        messageSent(conversation: $conversation) {
-            _id
+    subscription messageSent($conversationId: ID!) {
+        messageSent(conversationId: $conversationId) {
             body
             sender {
                 _id
@@ -89,6 +91,72 @@ const MESSAGE_SUBSCRIPTION = gql`
         }
     }
 `;
+
+function Messages(
+    { conversation, messages, setMessages }
+) {
+
+    const containerRef = useRef(null);
+
+    const { data, loading, error } = useSubscription(MESSAGE_SUBSCRIPTION, {
+        variables: {
+            conversationId: conversation._id
+        },
+        onSubscriptionData: ({ subscriptionData }) => {
+            const message = subscriptionData.data.messageSent;
+            setMessages([...messages, message]);
+        }
+    });
+
+    useEffect(() => {
+        // Scroll to the bottom of the container when data changes
+        containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }, [data]);
+
+    // if (loading) {
+    //     return <p>Loading...</p>;
+    // }
+
+    // if (error) {
+    //     return <p>Error!</p>;
+    // }
+
+    if (messages) {
+        return (
+            <div className='messages__wrapper' ref={containerRef}
+            >
+                {
+                    messages.map(message => {
+                        const user = { _id: message.sender._id };
+                        conversation.users.map(u => {
+                            if (u._id === message.sender._id) {
+                                user.username = u.username;
+                                user.profile_picture = u.profile_picture;
+                            }
+                        });
+                        if (
+                            message.sender === Cookies.get('userId')
+                        ) {
+                            return (
+                                <SentMessage
+                                    message={message}
+                                    user={user}
+                                />
+                            )
+                        } else {
+                            return (
+                                <ReceivedMessage
+                                    message={message}
+                                    user={user}
+                                />
+                            )
+                        }
+                    })
+                }
+            </div>
+        )
+    }
+}
 
 function GetOrderStatus({ status }) {
     switch (status) {
@@ -159,54 +227,94 @@ function GetOrderStatus({ status }) {
 }
 
 function GetOrderActions({ status, updateOrderStatus, orderId }) {
-    switch (status) {
-        case 'pending':
-            return (
-                <div className='order__actions'>
-                    <button
-                        onClick={() => {
-                            updateOrderStatus({ variables: { orderId: orderId, status: 'DECLINED' } })
-                                .then(() => {
-                                    window.location.reload();
-                                });
-                        }}
-                        className='order__button decline-order__button'>Decline</button>
-                    <button
-                        onClick={() => {
-                            updateOrderStatus({ variables: { orderId: orderId, status: 'IN_PROGRESS' } })
-                                .then(() => {
-                                    window.location.reload();
-                                });
-                        }}
-                        className='order__button accept-order__button'>Accept</button>
-                </div>
-            );
-        case 'in_progress':
-            return (
-                <div className='order__actions'>
-                    <button
-                        onClick={() => {
-                            updateOrderStatus({ variables: { orderId: orderId, status: 'CANCELLED' } })
-                                .then(() => {
-                                    window.location.reload();
-                                });
-                        }}
-                        className='order__button cancel-order__button'>Cancel</button>
-                    <button
-                        onClick={() => {
-                            updateOrderStatus({ variables: { orderId: orderId, status: 'COMPLETED' } })
-                                .then(() => {
-                                    window.location.reload();
-                                });
-                        }}
-                        className='order__button complete-order__button'>Mark as completed</button>
-                </div>
-            );
-        default:
-            return (
-                <div className='order__actions'>
-                </div>
-            );
+
+    const isFreelancer = Cookies.get('isFreelancer');
+
+    if (isFreelancer === 'true') {
+        switch (status) {
+            case 'pending':
+                return (
+                    <div className='order__actions row'>
+                        <button
+                            onClick={() => {
+                                updateOrderStatus({ variables: { orderId: orderId, status: 'DECLINED' } })
+                                    .then(() => {
+                                        window.location.reload();
+                                    });
+                            }}
+                            className='order__button decline-order__button col-xs-12 col-sm-12 col-md-4 col-lg-4'>Decline</button>
+                        <button
+                            onClick={() => {
+                                updateOrderStatus({ variables: { orderId: orderId, status: 'IN_PROGRESS' } })
+                                    .then(() => {
+                                        window.location.reload();
+                                    });
+                            }}
+                            className='order__button accept-order__button col-xs-12 col-sm-12 col-md-4 col-lg-4'>Accept</button>
+                    </div>
+                );
+            case 'in_progress':
+                return (
+                    <div className='order__actions row'>
+                        <button
+                            onClick={() => {
+                                updateOrderStatus({ variables: { orderId: orderId, status: 'CANCELLED' } })
+                                    .then(() => {
+                                        window.location.reload();
+                                    });
+                            }}
+                            className='order__button cancel-order__button col-xs-12 col-sm-12 col-md-4 col-lg-4'>Cancel</button>
+                        <button
+                            onClick={() => {
+                                updateOrderStatus({ variables: { orderId: orderId, status: 'COMPLETED' } })
+                                    .then(() => {
+                                        window.location.reload();
+                                    });
+                            }}
+                            className='order__button complete-order__button col-xs-12 col-sm-12 col-md-4 col-lg-4'>Mark as completed</button>
+                    </div>
+                );
+            default:
+                return (
+                    <div className='order__actions'>
+                    </div>
+                );
+        }
+    } else {
+        switch (status) {
+            case 'pending':
+            case 'in_progress':
+                return (
+                    <div className='order__actions row'>
+                        <button
+                            onClick={() => {
+                                updateOrderStatus({ variables: { orderId: orderId, status: 'CANCELLED' } })
+                                    .then(() => {
+                                        window.location.reload();
+                                    });
+                            }}
+                            className='order__button cancel-order__button col-xs-12 col-sm-12 col-md-4 col-lg-4'>Cancel</button>
+                    </div>
+                );
+            case 'completed':
+                return (
+                    <div className='order__actions row'>
+                        <button
+                            onClick={() => {
+                                updateOrderStatus({ variables: { orderId: orderId, status: 'CLOSED' } })
+                                    .then(() => {
+                                        window.location.reload();
+                                    });
+                            }}
+                            className='order__button complete-order__button col-xs-12 col-sm-12 col-md-4 col-lg-4'>Pay</button>
+                    </div>
+                );
+            default:
+                return (
+                    <div className='order__actions'>
+                    </div>
+                );
+        }
     }
 }
 
@@ -223,7 +331,11 @@ function Order() {
 
     const orderId = useParams().id;
 
+    const userData = useContext(UserContext);
+
     const userId = Cookies.get('userId');
+
+    const [messages, setMessages] = useState([]);
 
     const [message, setMessage] = useState('');
 
@@ -235,6 +347,15 @@ function Order() {
         variables: { orderId: orderId },
     }
     );
+
+    useEffect(() => {
+        if (dataConversation) {
+            setMessages(dataConversation.conversationByOrderId.messages);
+        }
+    }, [dataConversation]);
+
+    // if (dataConversation)
+    //     console.log(dataConversation.conversationByOrderId.messages);
 
     const [updateOrderStatus] = useMutation(UPDATE_ORDER_STATUS);
 
@@ -271,8 +392,8 @@ function Order() {
                     </div>
                     <div className='order__body__details'>
                         <h2>Details</h2>
-                        <div className='order__body__details__container'>
-                            <div className='order__body__details__info'>
+                        <div className='order__body__details__container row'>
+                            <div className='order__body__details__info col-xs-12'>
                                 <div className='order__body__details__item'>
                                     <p className='order__body__details__item__title'>Client</p>
                                     <p className='order__body__details__item__content'>{data.orderById.client.username}</p>
@@ -294,7 +415,7 @@ function Order() {
                                     }</p>
                                 </div>
                             </div>
-                            <div className='order__body__details__description'>
+                            <div className='order__body__details__description col-xs-12'>
                                 <div className='order__body__details__item'>
                                     <p className='order__body__details__item__title'>Comment</p>
                                     <p className='order__body__details__item__content'>{
@@ -322,15 +443,10 @@ function Order() {
                             <div className='order__chat__messages__container'>
                                 {
                                     dataConversation &&
-                                    dataConversation
-                                        .conversationByOrderId
-                                        .messages
-                                        .map(message =>
-                                            message.sender._id === userId ?
-                                                <SentMessage message={message} />
-                                                :
-                                                <ReceivedMessage message={message} />
-                                        )
+                                    <Messages conversation={dataConversation.conversationByOrderId}
+                                        messages={messages}
+                                        setMessages={setMessages}
+                                    />
                                 }
                             </div>
                         </div>
@@ -347,10 +463,11 @@ function Order() {
                                         sendMessage({
                                             variables: {
                                                 conversation: dataConversation.conversationByOrderId._id,
-                                                sender: '64588c572d6032dd97162aa6',
+                                                sender: userId,
                                                 body: message
                                             }
                                         });
+                                        setMessage('');
                                     }
                                 }
                                 className='order__chat__send-button'>
