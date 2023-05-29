@@ -1,10 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "./MainNavigation.css";
+import ResponsiveSearch from "../responsive-search/ResponsiveSearch";
 import UserOptions from "../user-options/UserOptions";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import NavigationDrawer from "../navigation-drawer/NavigationDrawer";
 
 const validate = values => {
     const errors = {};
@@ -56,6 +58,7 @@ const MainNavigation = () => {
 
     return (
         <header>
+            <NavigationDrawer />
             <NavLink to="/" className="active-link">
                 <div className="main-navigation__logo">FreelanceConnect</div>
             </NavLink>
@@ -94,7 +97,7 @@ const MainNavigation = () => {
                 </NavLink> */}
                 {
                     isFreelancer ? (
-                        <NavLink to="/orders" className="active-link">
+                        <NavLink to="/orders" className="active-link orders-link">
                             <div className="nav-link__wrapper">
                                 <span className="material-symbols-outlined">
                                     receipt_long
@@ -122,6 +125,7 @@ const MainNavigation = () => {
                         <a href="/">Logout</a>
                     </div> */}
                 {/* </a> */}
+                <ResponsiveSearch />
                 <UserOptions />
             </div>
         </header>
