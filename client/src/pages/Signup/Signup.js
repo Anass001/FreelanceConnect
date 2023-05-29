@@ -33,7 +33,7 @@ const validate = values => {
 const CREATE_USER = gql`
   mutation CreateUser($full_name: String!, $username: String!, $email: String!, $password: String!) {
     createUser(user: {full_name: $full_name, username: $username, email: $email, password: $password}) {
-      id
+      _id
     }
   }
 `;
@@ -102,32 +102,32 @@ function Signup() {
                     </div>
                 }
                 <form onSubmit={formik.handleSubmit}>
-                    <label>
+                    <label class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
                         <input type="text" id="fullname" name='fullname' placeholder='Full Name' onChange={formik.handleChange} value={formik.values.fullname} />
                     </label>
-                    <label>
+                    <label class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
                         <input type="text" id="username" name='username' placeholder='Username' onChange={formik.handleChange} value={formik.values.username} />
                     </label>
-                    <label>
+                    <label class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
                         <input type="email" id="email" name="email" placeholder='Email' onChange={formik.handleChange} value={formik.values.email} />
                         <p className="info__validation email__validation">{formik.errors.email}</p>
                     </label>
-                    <label>
+                    <label class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
                         <input type="password" id="password" name="password" placeholder='Password' onChange={formik.handleChange} value={formik.values.password} />
                         <p className="info__validation password__validation">{formik.errors.password}</p>
                     </label>
-                    <label>
+                    <label class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
                         <input type="password" id="confirmPassword" name="confirmPassword" placeholder='Confirm password' onChange={formik.handleChange} value={formik.values.confirmPassword} />
                         <p className="info__validation password-confirmation__validation">{formik.errors.confirmPassword}</p>
                     </label>
-                    <div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
                         {loading ? <button className='signup-submit__button' type="submit">Loading...</button> : <button className='signup-submit__button' type="submit">Sign up</button>}
                     </div>
                 </form>
                 <div className="login-link__wrapper">
                     <p className="login-link__text">Already have an account?</p>
                     <NavLink to="/" activeClassName="active-link">
-                        <p className="login-link">Login.</p>
+                        <p className="login-link">Login</p>
                     </NavLink>
                 </div>
             </div>

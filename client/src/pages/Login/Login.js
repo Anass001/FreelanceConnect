@@ -3,7 +3,7 @@ import './Login.css';
 import { useFormik } from 'formik';
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { gql, useLazyQuery  } from '@apollo/client';
+import { gql, useLazyQuery } from '@apollo/client';
 import Cookies from 'js-cookie';
 
 const validate = values => {
@@ -44,8 +44,9 @@ function Login() {
     }
 
     if (!error && data) {
-        Cookies.set('token', data.login.token, { expires: data.login.tokenExpiration});
-        Cookies.set('userId', data.login.userId, { expires: data.login.tokenExpiration});
+        Cookies.set('token', data.login.token, { expires: data.login.tokenExpiration });
+        Cookies.set('isFreelancer', 'true', { expires: data.login.tokenExpiration });
+        // Cookies.set('userId', data.login.userId, { expires: data.login.tokenExpiration});
         navigate('/');
         window.location.reload();
     }
@@ -91,23 +92,23 @@ function Login() {
                     </div>
                 }
                 <form onSubmit={formik.handleSubmit}>
-                    <label>
+                    <label class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
                         <input type="email" id="email" name="email" placeholder='Email' onChange={formik.handleChange} value={formik.values.email} />
                         <p className="info__validation email__validation">{formik.errors.email}</p>
                     </label>
-                    <label>
+                    <label class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
                         <p></p>
                         <input type="password" id="password" name="password" placeholder='Password' onChange={formik.handleChange} value={formik.values.password} />
                         <p className="info__validation password__validation">{formik.errors.password}</p>
                     </label>
-                    <div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
                         {loading ? <button className='signin-submit__button' type="submit">Loading...</button> : <button className='signin-submit__button' type="submit">Login</button>}
                     </div>
                 </form>
                 <div className="signup-link__wrapper">
                     <p className="signup-link__text">Don't have an account?</p>
                     <NavLink to="/signup" activeClassName="active-link">
-                        <p className="signup-link">Sign up.</p>
+                        <p className="signup-link">Sign up</p>
                     </NavLink>
                 </div>
             </div>

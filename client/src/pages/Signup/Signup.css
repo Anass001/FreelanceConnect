@@ -58,8 +58,9 @@
     border: 1px solid #ccc;
     border-width: 0px 0px 1px 0px;
     padding-bottom: 10px;
+    width: 100%;
+    border-radius: 0px;
     /* margin-bottom: 20px; */
-    min-width: 400px;
     box-sizing: border-box;
     outline: none;
 }
@@ -87,7 +88,7 @@
     color: #2DB67C;
     border: none;
     border-radius: 4px;
-    min-width: 400px;
+    width: 100%;
     background-color: transparent;
     margin-top: 30px;
     border: solid 1px #2DB67C;
@@ -166,4 +167,21 @@
     padding: 10px;
     color: rgb(233 64 64);
     font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    
+    .signup__wrapper {
+        margin-left: 0px;
+    }
+
+    .auth-signup__wrapper{
+        padding: 24px;
+    }
+    
+    .login-link__wrapper{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
 }
