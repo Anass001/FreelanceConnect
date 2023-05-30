@@ -1,25 +1,39 @@
-const User = require('../../models/user');
-const jwt = require('jsonwebtoken');
+import User from '../../models/user.js';
+import jwt from 'jsonwebtoken';
 
-module.exports = {
+const AuthResolver = {
     Query: {
         login: async (_parent, { email, password }, _, info) => {
             const user = await User.findOne({ email: email });
-            if (!user || user.password !== password) throw new Error('Invalid credentials');
-            
+            if (!user || user.password !== password)
+                throw new Error('Invalid credentials');
+
             const token = jwt.sign({
                 userId: user.id,
                 email: user.email,
-            }, 'my-private-key', {
-                expiresIn: '2h'
+            }, process.env.JWT_KEY, {
+                expiresIn: '2 days'
             });
-            
+
             return {
                 userId: user.id,
                 token: token,
                 tokenExpiration: 2,
             };
         },
+        getUserByToken: async (_parent, { token }, _, info) => {
+            try {
+                const decoded = jwt.verify(token, process.env.JWT_KEY);
+                const user = await User.findById(decoded.userId);
+                if (!user) {
+                    throw new Error('User not found');
+                }
+                return user;
+            } catch (err) {
+                console.log(err);
+                throw err;
+            }
+        }
     },
     Mutation: {
         createUser: async (_parent, { user }) => {
@@ -29,8 +43,7 @@ module.exports = {
                         { email: user.email },
                         { username: user.username }
                     ]
-                })
-                // const existingUser = await User.findOne({ $or: [user.email, user.username] });
+                });
                 if (existingUser) {
                     if (existingUser.email === user.email) {
                         throw new Error('Email already in use');
@@ -54,6 +67,8 @@ module.exports = {
                 console.log(err);
                 throw err;
             }
-        }
+        },
     }
 }
+
+export default AuthResolver;

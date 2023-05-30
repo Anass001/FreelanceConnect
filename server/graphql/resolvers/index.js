@@ -1,13 +1,13 @@
-const authResolver = require('./auth');
-const servicesResolver = require('./services');
-const categoriesResolver = require('./categories');
-const reviewsResolver = require('./reviews');
-const usersResolver = require('./users');
-const uploadResolver = require('./upload');
-const ordersResolver = require('./orders');
-const chatsResolver = require('./chat');
+import authResolver from './auth.js';
+import servicesResolver from './services.js';
+import categoriesResolver from './categories.js';
+import reviewsResolver from './reviews.js';
+import usersResolver from './users.js';
+import uploadResolver from './upload.js';
+import ordersResolver from './orders.js';
+import chatsResolver from './chat.js';
 
-const merge = require('lodash/merge');
+import merge from 'lodash/merge.js';
 
 const resolvers = merge(
     authResolver,
@@ -20,4 +20,4 @@ const resolvers = merge(
     chatsResolver
 );
 
-module.exports = resolvers;
+export default resolvers;

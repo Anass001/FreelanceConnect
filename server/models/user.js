@@ -1,6 +1,6 @@
-const moongose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
-const userSchema = new moongose.Schema({
+const userSchema = new Schema({
     email: {
         type: String,
         required: true
@@ -20,34 +20,34 @@ const userSchema = new moongose.Schema({
     spending: Number,
     services: [
         {
-            type: moongose.Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'Service'
         }
     ],
     reviews: [
         {
-            type: moongose.Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'Review'
         }
     ],
     notifications: [
         {
-            type: moongose.Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'Notification'
         }
     ],
     orders: [
         {
-            type: moongose.Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'Order'
         }
     ],
     conversations: [
         {
-            type: moongose.Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'Conversation'
         }
     ],
 });
 
-module.exports = moongose.model('User', userSchema);
+export default model('User', userSchema);

@@ -1,8 +1,8 @@
-const Service = require('../../models/service');
-const User = require('../../models/user');
-const Category = require('../../models/category');
+import Service from '../../models/service.js';
+import User from '../../models/user.js';
+import Category from '../../models/category.js';
 
-module.exports = {
+const ServicesResolver = {
     Query: {
         services: async () => {
             try {
@@ -35,6 +35,27 @@ module.exports = {
         servicesByCategory: async (_parent, { category }) => {
             try {
                 const categoryDocument = await Category.findOne({ name: category });
+
+                if (!categoryDocument) {
+                    // Category not found
+                    return [];
+                }
+
+                // Find services with the matching category ID
+                const services = await Service.find({ category: categoryDocument._id })
+                    .populate('freelancer', 'username profile_picture');
+
+                return services;
+            } catch (err) {
+                throw err;
+            }
+        },
+        servicesByCategoryUrlName: async (_parent, { categoryUrlName }) => {
+            try {
+                const categoryDocument = await Category.findOne({ url_name: categoryUrlName });
+
+                console.log(categoryDocument);
+                console.log("Hello");
 
                 if (!categoryDocument) {
                     // Category not found
@@ -100,3 +121,5 @@ module.exports = {
         }
     }
 }
+
+export default ServicesResolver;

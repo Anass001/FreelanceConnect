@@ -1,13 +1,12 @@
-const Category = require('../../models/category');
+import Category from '../../models/category.js';
 
-module.exports = {
+const CategoriesResolver = {
     Query: {
         categories: async (_parent, args, req) => {
             try {
                 const categories = await Category.find();
-                console.log(categories)
                 return categories.map(category => {
-                    return { ...category._doc, _id: category.id };
+                    return { ...category._doc, _id: category._id };
                 });
             } catch (err) {
                 throw err;
@@ -32,3 +31,5 @@ module.exports = {
         }
     }
 }
+
+export default CategoriesResolver;

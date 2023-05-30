@@ -1,8 +1,8 @@
-const moongose = require('mongoose');
+import { Schema } from 'mongoose';
 
-const notificationSchema = new moongose.Schema({
+const notificationSchema = new Schema({
     user: {
-        type: moongose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'User'
     },
     content: {

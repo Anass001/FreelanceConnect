@@ -1,7 +1,17 @@
-const Conversation = require('../../models/conversation');
-const Message = require('../../models/message');
+import Conversation from '../../models/conversation.js';
+import Message from '../../models/message.js';
+import { PubSub } from 'graphql-subscriptions';
 
-module.exports = {
+const pubsub = new PubSub();
+
+const ChatResolver = {
+    Subscription: {
+        messageSent: {
+            subscribe: (_parent, { conversationId }) => {
+                return pubsub.asyncIterator([conversationId]);
+            }
+        }
+    },
     Query: {
         conversationByOrderId: async (_parent, { orderId }) => {
             try {
@@ -29,6 +39,10 @@ module.exports = {
                 });
                 const result = await newMessage.save();
 
+                pubsub.publish(message.conversation, {
+                    messageSent: { ...result._doc, _id: result._id }
+                });
+
                 const conversation = await Conversation.findById(message.conversation);
                 conversation.messages.push(result._id);
                 await conversation.save();
@@ -40,3 +54,5 @@ module.exports = {
         }
     }
 };
+
+export default ChatResolver;

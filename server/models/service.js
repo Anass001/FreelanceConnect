@@ -1,13 +1,13 @@
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
-const serviceSchema = new mongoose.Schema({
+const serviceSchema = new Schema({
     title: {
         type: String,
         required: true
     },
     description: String,
     category: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Category'
     },
     price: {
@@ -15,18 +15,18 @@ const serviceSchema = new mongoose.Schema({
         required: true
     },
     freelancer: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'User'
     },
     reviews: [
         {
-            type: mongoose.Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'Review'
         }
     ],
     orders: [
         {
-            type: mongoose.Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'Order'
         }
     ],
@@ -37,4 +37,4 @@ const serviceSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Service', serviceSchema);
+export default model('Service', serviceSchema);

@@ -1,7 +1,6 @@
-const User = require('../../models/user');
-const jwt = require('jsonwebtoken');
+import User from '../../models/user.js';
 
-module.exports = {
+const UsersResolver = {
     Query: {
         user: async (_parent, { userId }) => {
             try {
@@ -14,3 +13,5 @@ module.exports = {
         },
     }
 }
+
+export default UsersResolver;

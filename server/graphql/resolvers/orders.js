@@ -1,7 +1,7 @@
-const Order = require('../../models/order');
-const Conversation = require('../../models/conversation');
+import Order from '../../models/order.js';
+import Conversation from '../../models/conversation.js';
 
-module.exports = {
+const OrdersResolver = {
     Query: {
         ordersByClientId: async (_parent, { userId }) => {
             try {
@@ -83,3 +83,5 @@ module.exports = {
         }
     }
 };
+
+export default OrdersResolver;

@@ -1,12 +1,12 @@
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
-const conversationSchema = new mongoose.Schema({
+const conversationSchema = new Schema({
     users: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'User'
     }],
     messages: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Message',
         populate: {
             path: 'sender',
@@ -14,9 +14,9 @@ const conversationSchema = new mongoose.Schema({
         }
     }],
     order: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Order'
     }
 });
 
-module.exports = mongoose.model('Conversation', conversationSchema);
+export default model('Conversation', conversationSchema);

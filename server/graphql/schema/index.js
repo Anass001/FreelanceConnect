@@ -1,6 +1,6 @@
-const { gql } = require('apollo-server-express');
+import { gql } from 'apollo-server-express';
 
-module.exports = gql`
+const Schema = gql`
 
 type Query {
   services: [Service]!,
@@ -10,6 +10,7 @@ type Query {
   reviewsByServiceId(serviceId: ID!): [Review]!,
   servicesByUserId(userId: ID!): [Service]!,
   servicesByCategory(category: String!): [Service]!,
+  servicesByCategoryUrlName(categoryUrlName: String!): [Service]!,
   service(serviceId: ID!): Service!,
   servicesBySearchQuery(searchQuery: String!): [Service]!,
   user(userId: ID!): User!,
@@ -17,6 +18,7 @@ type Query {
   ordersByFreelancerId(userId: ID!): [Order]!,
   orderById(orderId: ID!): Order!,
   conversationByOrderId(orderId: ID!): Conversation!,
+  getUserByToken(token: String!): User!,
 },
 
 type Mutation {
@@ -160,6 +162,7 @@ type Category{
   _id: ID!,
   name: String!,
   description: String!,
+  url_name: String!,
   services: [Service]!,
 }
 
@@ -215,3 +218,4 @@ type Chat{
 },
 
 `
+export default Schema;

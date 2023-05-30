@@ -1,9 +1,7 @@
-const cloudinary = require('cloudinary').v2;
-const {
-    GraphQLUpload,
-} = require('graphql-upload');
+import { GraphQLUpload } from 'graphql-upload';
+import cloudinary from 'cloudinary';
 
-module.exports = {
+const UploadResolver = {
     Upload: GraphQLUpload,
     Mutation: {
         uploadPhoto: async (_parent, { photo }, req) => {
@@ -116,3 +114,5 @@ module.exports = {
         }
     }
 }
+
+export default UploadResolver;

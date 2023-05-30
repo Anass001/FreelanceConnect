@@ -1,6 +1,6 @@
-const jwt = require('jsonwebtoken');
+import { verify } from 'jsonwebtoken';
 
-module.exports = (req, res, next) => {
+export default (req, res, next) => {
 
     const token = req.cookies.token; // Get the token value from the 'token' cookie
 
@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
 
     let decodedToken;
     try {
-        decodedToken = jwt.verify(token, 'my-private-key');
+        decodedToken = verify(token, 'my-private-key');
     } catch (err) {
         req.isAuth = false;
         console.log('Invalid token');

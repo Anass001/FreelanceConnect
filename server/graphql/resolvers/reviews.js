@@ -1,6 +1,6 @@
-const Review = require('../../models/Review');
+import Review from '../../models/Review.js';
 
-module.exports = {
+const ReviewsResolver = {
     Query: {
         reviewsByUserId: async (_parent, { userId }, req) => {
             try {
@@ -45,3 +45,5 @@ module.exports = {
         }
     }
 }
+
+export default ReviewsResolver;
