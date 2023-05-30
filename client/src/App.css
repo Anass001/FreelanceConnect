@@ -1,4 +1,16 @@
-.Navigation{
+.Navigation {
     display: flex;
     flex-direction: column;
+}
+
+.App {
+    max-width: 1400px;
+    padding: 8px;
+    margin: 0 auto;
+}
+
+.unauthenticated-content__container * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }

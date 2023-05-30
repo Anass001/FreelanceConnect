@@ -9,7 +9,7 @@
 .service__container{
     display: flex;
     flex-direction: column;
-    width: 65%;
+    padding-right: 30px;
 }
 
 .service-info__container {
@@ -18,12 +18,12 @@
     padding: 30px;
     width: 100%;
     margin-top: 30px;
+    box-sizing: border-box;
 }
 
 .service-freelancer__container {
     display: flex;
     flex-direction: column;
-    width: 24%;
     border: 1px solid #E9EEF4;
     border-radius: 8px;
     padding: 30px;
@@ -120,6 +120,7 @@
     padding: 20px 30px 30px 30px;
     width: 100%;
     margin-top: 30px;
+    box-sizing: border-box;
 }
 
 .service-reviews__header{
@@ -143,4 +144,7 @@
 .service-image__carousel{
     margin-bottom: 50px;
     padding: 10px;
+}
+
+@media (max-width: 768px) {
 }

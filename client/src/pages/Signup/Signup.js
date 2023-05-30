@@ -126,7 +126,7 @@ function Signup() {
                 </form>
                 <div className="login-link__wrapper">
                     <p className="login-link__text">Already have an account?</p>
-                    <NavLink to="/" activeClassName="active-link">
+                    <NavLink to="/login" activeClassName="active-link">
                         <p className="login-link">Login</p>
                     </NavLink>
                 </div>

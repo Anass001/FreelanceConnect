@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './Orders.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQuery, gql } from '@apollo/client';
 import Cookies from 'js-cookie';
 import defaultImage from '../../assets/images/default-user-image.png';
+import UserContext from '../../UserContext';
 
 const GET_ORDERS_BY_CLIENT_ID = `
     query getOrdersByClientId($userId: ID!) {
@@ -25,7 +26,7 @@ function Orders() {
 
     const navigate = useNavigate();
 
-    const userId = Cookies.get('userId');
+    const userId = useContext(UserContext).userId
 
     const { loading: ordersLoading, error: ordersError, data: ordersData } = useQuery(gql(GET_ORDERS_BY_CLIENT_ID), {
         variables: { userId: userId },

@@ -15,8 +15,7 @@ const wsLink = new GraphQLWsLink(createClient({
 }));
 
 const httpLink = createUploadLink({
-  uri: 'http://localhost:4000/graphql',
-  credentials: 'include'
+  uri: 'http://localhost:4000/graphql'
 });
 
 const splitLink = split(

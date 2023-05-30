@@ -333,7 +333,7 @@ function Order() {
 
     const userData = useContext(UserContext);
 
-    const userId = Cookies.get('userId');
+    const userId = userData.userId;
 
     const [messages, setMessages] = useState([]);
 

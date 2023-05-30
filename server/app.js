@@ -1,30 +1,51 @@
-const express = require('express');
+import { ApolloServer } from '@apollo/server';
+import { expressMiddleware } from '@apollo/server/express4';
+import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
+import { createServer } from 'http';
+import express from 'express';
+import { makeExecutableSchema } from '@graphql-tools/schema';
+import { WebSocketServer } from 'ws';
+import { useServer } from 'graphql-ws/lib/use/ws';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import typeDefs from './graphql/schema/index.js';
+import resolvers from './graphql/resolvers/index.js';
+import { connect } from 'mongoose';
+
+import isAuth from './middleware/is-auth.js';
+// import { ApolloServer, gql } from 'apollo-server-express';
+import { graphqlUploadExpress } from 'graphql-upload';
+import cookieParser from 'cookie-parser';
+
+const schema = makeExecutableSchema({ typeDefs, resolvers });
+
 const app = express();
-const isAuth = require('./middleware/is-auth');
-const { ApolloServer, gql } = require('apollo-server-express');
-const { graphqlUploadExpress } = require('graphql-upload');
+const httpServer = createServer(app);
 
-const typeDefs = require('./graphql/schema/index')
+const wsServer = new WebSocketServer({
+  server: httpServer,
+  path: '/graphql',
+});
 
-const resolvers = require('./graphql/resolvers/index');
-const mongoose = require('mongoose');
-const cookieParser = require('cookie-parser');
+const serverCleanup = useServer({ schema }, wsServer);
 
-const { GraphQLWsLink } = require("@apollo/client/link/subscriptions");
-const { createClient } = require("graphql-ws");
+const server = new ApolloServer({
+  schema,
+  plugins: [
+    ApolloServerPluginDrainHttpServer({ httpServer }),
+    {
+      async serverWillStart() {
+        return {
+          async drainServer() {
+            await serverCleanup.dispose();
+          },
+        };
+      },
+    },
+  ],
+});
 
-const wsLink = new GraphQLWsLink(createClient({
-  url: 'ws://localhost:4000/subscriptions',
-}));
-
-const server = new ApolloServer({ typeDefs, resolvers }, {
-  context: ({ req }) => {
-    console.log(req)
-  }
-}
-);
-
-mongoose.connect(`mongodb+srv://
+connect(`mongodb+srv://
 ${process.env.MONGO_ATLAS_USER}:${process.env.MONGO_ATLAS_PW}
 @cluster0.y16icjh.mongodb.net/${process.env.MONGO_ATLAS_DB}?retryWrites=true&w=majority`)
   .then(() => {
@@ -39,21 +60,42 @@ const corsOptions = {
   credentials: true
 }
 
-async function startServer() {
-  app.use(
-    graphqlUploadExpress({
-      // Limits here should be stricter than config for surrounding infrastructure
-      // such as NGINX so errors can be handled elegantly by `graphql-upload`.
-      maxFileSize: 1000000, // 1 MB
-      maxFiles: 20,
-    })
-  );
-  app.use(cookieParser());
-  app.use(isAuth);
-  await server.start();
-  server.applyMiddleware({ app, cors: corsOptions });
-}
+await server.start();
 
-startServer();
+app.use(
+  '/graphql',
+  cors(),
+  graphqlUploadExpress({
+    maxFileSize: 1000000, // 1 MB
+    maxFiles: 20,
+  }),
+  cookieParser(),
+  isAuth,
+  bodyParser.json(),
+  expressMiddleware(server)
+);
 
-app.listen(4000, '0.0.0.0');
+const PORT = 4000;
+
+httpServer.listen(PORT, () => {
+  console.log(`Server is now running on http://localhost:${PORT}/graphql`);
+});
+
+// async function startServer() {
+//   app.use(
+//     graphqlUploadExpress({
+//       // Limits here should be stricter than config for surrounding infrastructure
+//       // such as NGINX so errors can be handled elegantly by `graphql-upload`.
+//       maxFileSize: 1000000, // 1 MB
+//       maxFiles: 20,
+//     })
+//   );
+//   app.use(cookieParser());
+//   app.use(isAuth);
+//   await server.start();
+//   server.applyMiddleware({ app, cors: corsOptions });
+// }
+
+// startServer();
+
+// app.listen(4000, '0.0.0.0');

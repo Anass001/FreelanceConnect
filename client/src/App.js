@@ -11,6 +11,7 @@ import CreateService from './pages/Service/CreateService';
 import CreateOrder from './pages/Order/CreateOrder';
 import NotFound from './pages/NotFound/NotFound';
 import Category from './pages/Category/Category';
+import Landing from './pages/Landing/Landing';
 import Service from './pages/Service/Service';
 import Profile from './pages/Profile/Profile';
 import Signup from './pages/Signup/Signup';
@@ -77,13 +78,15 @@ function App() {
 
   if (!token) {
     return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="*" element={<Login />} />
-          <Route exact path="/login" element={<Login />} />
-          <Route exact path="/signup" element={<Signup />} />
-        </Routes>
-      </BrowserRouter>
+      <div className="unauthenticated-content__container">
+        <BrowserRouter>
+          <Routes>
+            <Route path="*" element={<Landing />} />
+            <Route exact path="/login" element={<Login />} />
+            <Route exact path="/signup" element={<Signup />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
     )
   }
 

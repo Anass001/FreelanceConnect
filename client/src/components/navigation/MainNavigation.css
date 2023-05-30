@@ -15,6 +15,10 @@ header {
     flex-grow: 1;
 }
 
+.orders-link{
+    margin-right: 30px;
+}
+
 .main-navigation__search-container {
     display: flex;
     align-items: center;

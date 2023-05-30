@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
 import ServiceCard from '../../components/service-card/ServiceCard';
 import { gql, useQuery } from '@apollo/client';
 import Reviews from '../../components/reviews/Reviews';
@@ -8,6 +8,7 @@ import defaultImage from '../../assets/images/default-user-image.png'
 import { useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import LoadingIndicator from '../../components/loading-indicator/LoadingIndicator';
+import UserContext from '../../UserContext';
 
 const GET_SERVICES_BY_USER_ID = gql`
     query GetServicesByUserId($userId: ID!) {
@@ -37,6 +38,8 @@ const GET_USER_BY_ID = gql`
 `;
 
 function Services(props) {
+
+    const userData = useContext(UserContext);
 
     const isCurrentUser = props.isCurrentUser;
 
@@ -77,7 +80,11 @@ function Profile() {
 
     const { id } = useParams();
 
-    const isCurrentUser = id === Cookies.get('userId');
+    const userData = useContext(UserContext);
+
+    const isFreelancer = Cookies.get('isFreelancer') === 'true';
+
+    const isCurrentUser = id === userData.userId;
 
     const { loading, error, data } = useQuery(GET_USER_BY_ID, {
         variables: { userId: id },
@@ -114,12 +121,15 @@ function Profile() {
                         <div className="service-freelancer__description">{data.user.bio}</div>
                     </div>
                 }
-                <Reviews userId="64588c572d6032dd97162aa6" />
+                <Reviews userId={id} />
             </div>
-            <div className='service__container col-xs-12 col-sm-9 col-md-9 col-lg-9'>
-                <h1 className='service__title'>Services</h1>
-                <Services userId={id} isCurrentUser={isCurrentUser} />
-            </div>
+            {
+                (isFreelancer || !isCurrentUser) &&
+                <div className='service__container col-xs-12 col-sm-9 col-md-9 col-lg-9'>
+                    <h1 className='service__title'>Services</h1>
+                    <Services userId={id} isCurrentUser={isCurrentUser} />
+                </div>
+            }
         </div>
     );
 }

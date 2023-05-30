@@ -50,8 +50,8 @@ function Service() {
     if (data) console.log(data);
 
     return (
-        <div className="service__wrapper">
-            <div className='service__container'>
+        <div className="service__wrapper row">
+            <div className='service__container col-xs-12 col-sm-12 col-md-9 col-lg-9'>
                 <div className="service-info__container">
                     <h1 className='service-title'>
                         {data.service.title}
@@ -74,7 +74,7 @@ function Service() {
                     data.service._id
                 } />
             </div>
-            <div className="service-freelancer__container">
+            <div className="service-freelancer__container col-xs-12 col-sm-12 col-md-3 col-lg-3">
                 <NavLink to={`/user/${data.service.freelancer._id}`} className="service-freelancer__link">
                     <div className="service-freelancer__info">
                         <div className="service-freelancer__avatar">
