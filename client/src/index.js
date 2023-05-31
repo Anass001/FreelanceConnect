@@ -15,7 +15,11 @@ const wsLink = new GraphQLWsLink(createClient({
 }));
 
 const httpLink = createUploadLink({
-  uri: 'http://localhost:4000/graphql'
+  uri: 'http://localhost:4000/graphql',
+  credentials: 'include',
+  headers: {
+    'apollo-require-preflight': true,
+  },
 });
 
 const splitLink = split(
