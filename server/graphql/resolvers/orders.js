@@ -3,7 +3,10 @@ import Conversation from '../../models/conversation.js';
 
 const OrdersResolver = {
     Query: {
-        ordersByClientId: async (_parent, { userId }) => {
+        ordersByClientId: async (_parent, { userId }, context) => {
+            if (!context.isAuth || context.userId !== userId) {
+                throw new Error('Unauthenticated!');
+            } 
             try {
                 const orders = await Order.find({ client: userId })
                     .populate('freelancer', 'username profile_picture')
@@ -15,7 +18,10 @@ const OrdersResolver = {
                 throw err;
             }
         },
-        ordersByFreelancerId: async (_parent, { userId }) => {
+        ordersByFreelancerId: async (_parent, { userId }, context) => {
+            if (!context.isAuth) {
+                throw new Error('Unauthenticated!');
+            }
             try {
                 const orders = await Order.find({ freelancer: userId }).populate('order_service');
                 return orders.map(order => {
@@ -25,7 +31,10 @@ const OrdersResolver = {
                 throw err;
             }
         },
-        orderById: async (_parent, { orderId }) => {
+        orderById: async (_parent, { orderId }, context) => {
+            if (!context.isAuth) {
+                throw new Error('Unauthenticated!');
+            }
             try {
                 const order = await Order.findById(orderId)
                     .populate('client', 'username profile_picture')
@@ -39,17 +48,17 @@ const OrdersResolver = {
         }
     },
     Mutation: {
-        createOrder: async (_parent, { order }, { req }) => {
-            // if (!req.isAuth) {
-            //     throw new Error('Unauthenticated!');
-            // }
+        createOrder: async (_parent, { order }, context) => {
+            if (!context.isAuth) {
+                throw new Error('Unauthenticated!');
+            }
             try {
                 const newOrder = new Order({
                     service: order.service,
                     client: order.client,
                     freelancer: order.freelancer,
                     status: 'PENDING',
-                    date: Date.now(),
+                    date: new Date().toJSON().slice(0, 10),
                     deadline: order.deadline,
                     price: order.price,
                 });

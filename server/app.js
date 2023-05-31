@@ -12,8 +12,7 @@ import typeDefs from './graphql/schema/index.js';
 import resolvers from './graphql/resolvers/index.js';
 import { connect } from 'mongoose';
 
-import isAuth from './middleware/is-auth.js';
-// import { ApolloServer, gql } from 'apollo-server-express';
+import { verify } from 'jsonwebtoken';
 import { graphqlUploadExpress } from 'graphql-upload';
 import cookieParser from 'cookie-parser';
 
@@ -49,30 +48,67 @@ connect(`mongodb+srv://
 ${process.env.MONGO_ATLAS_USER}:${process.env.MONGO_ATLAS_PW}
 @cluster0.y16icjh.mongodb.net/${process.env.MONGO_ATLAS_DB}?retryWrites=true&w=majority`)
   .then(() => {
-    console.log('Connected to database')
+    console.log('Connected to the database');
   })
   .catch((err) => {
-    console.log(err)
+    console.log(err);
   });
 
 const corsOptions = {
   origin: ['http://localhost:3000', 'https://studio.apollographql.com'],
-  credentials: true
-}
+  credentials: true,
+};
 
 await server.start();
 
 app.use(
   '/graphql',
-  cors(),
+  cookieParser(),
+  cors(corsOptions),
   graphqlUploadExpress({
     maxFileSize: 1000000, // 1 MB
     maxFiles: 20,
   }),
-  cookieParser(),
-  isAuth,
   bodyParser.json(),
-  expressMiddleware(server)
+  expressMiddleware(server, {
+    context: ({ req }) => {
+      const token = req.cookies.token; // Get the token value from the 'token' cookie
+
+      if (!token) {
+        req.isAuth = false;
+        console.log('No token');
+        return {
+          isAuth: false,
+        }
+      }
+
+      let decodedToken;
+      try {
+        decodedToken = verify(token, process.env.JWT_KEY);
+      } catch (err) {
+        req.isAuth = false;
+        console.log('Invalid token');
+        return {
+          isAuth: false,
+        }
+      }
+
+      if (!decodedToken) {
+        req.isAuth = false;
+        console.log('Invalid token');
+        return {
+          isAuth: false,
+        }
+      }
+
+      console.log('Valid token');
+
+      return {
+        isAuth: true,
+        userId: decodedToken.userId,
+      }
+    } // Retrieve token from req.cookies
+  }),
 );
 
 const PORT = 4000;
@@ -80,22 +116,3 @@ const PORT = 4000;
 httpServer.listen(PORT, () => {
   console.log(`Server is now running on http://localhost:${PORT}/graphql`);
 });
-
-// async function startServer() {
-//   app.use(
-//     graphqlUploadExpress({
-//       // Limits here should be stricter than config for surrounding infrastructure
-//       // such as NGINX so errors can be handled elegantly by `graphql-upload`.
-//       maxFileSize: 1000000, // 1 MB
-//       maxFiles: 20,
-//     })
-//   );
-//   app.use(cookieParser());
-//   app.use(isAuth);
-//   await server.start();
-//   server.applyMiddleware({ app, cors: corsOptions });
-// }
-
-// startServer();
-
-// app.listen(4000, '0.0.0.0');

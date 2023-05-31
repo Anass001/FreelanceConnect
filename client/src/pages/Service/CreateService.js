@@ -1,9 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import './CreateService.css';
 import { useFormik } from 'formik';
 import { useNavigate } from "react-router-dom";
 import { useMutation, gql, useQuery } from '@apollo/client';
 import ImageDropZone from '../../components/image-drop-zone/ImageDropZone';
+import UserContext from '../../UserContext';
 
 const validate = values => {
     const errors = {};
@@ -70,6 +71,8 @@ function CreateService() {
 
     const navigate = useNavigate();
 
+    const userId = useContext(UserContext).userId;
+
     const [createService, { data: serviceData, loading: serviceLoading, error: serviceError, reset: serviceReset }] = useMutation(CREATE_SERVICE);
 
     const { loading, error, data } = useQuery(GET_CATEGORIES);
@@ -77,7 +80,7 @@ function CreateService() {
     const [multipleUpload, { data: multipleUploadData, loading: multipleUploadLoading, error: multipleUploadError, reset: multipleUploadReset }] = useMutation(MULTIPLE_UPLOAD);
 
     if (!serviceError && serviceData) {
-        navigate('/user/');
+        navigate('/user/' + userId);
     }
 
     const formik = useFormik({

@@ -7,6 +7,9 @@ import { NavLink, useParams } from 'react-router-dom';
 import LoadingIndicator from '../../components/loading-indicator/LoadingIndicator';
 import { useQuery, gql } from '@apollo/client';
 import defaultImage from '../../assets/images/default-user-image.png';
+import { useContext } from 'react';
+import UserContext from '../../UserContext';
+import Cookies from 'js-cookie';
 
 const GET_service_BY_ID = gql`
     query GetServiceById($serviceId: ID!) {
@@ -40,6 +43,9 @@ const GET_service_BY_ID = gql`
 function Service() {
 
     const { id } = useParams();
+
+    const userId = useContext(UserContext).userId;
+    const isFreelancer = Cookies.get('isFreelancer');
 
     const { loading, error, data } = useQuery(GET_service_BY_ID, {
         variables: { serviceId: id },
@@ -95,9 +101,13 @@ function Service() {
                         data.service.freelancer.bio
                     }
                 </div>
-                <NavLink to={`/create-order/${data.service._id}`}>
-                    <button className="service-freelancer__hire-button">Hire</button>
-                </NavLink>
+                {
+                    isFreelancer === 'false' && userId !== data.service.freelancer._id ? (
+                        <NavLink to={`/create-order/${data.service._id}`}>
+                            <button className="service-freelancer__hire-button">Hire</button>
+                        </NavLink>
+                    ) : null
+                }
             </div>
         </div>
     )

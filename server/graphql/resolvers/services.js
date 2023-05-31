@@ -16,7 +16,7 @@ const ServicesResolver = {
         },
         service: async (_parent, { serviceId }) => {
             try {
-                const service = await Service.findById(serviceId).populate('freelancer', 'username profile_picture');
+                const service = await Service.findById(serviceId).populate('freelancer', 'username profile_picture bio');
                 return { ...service._doc, _id: service.id };
             } catch (err) {
                 throw err;
@@ -99,9 +99,13 @@ const ServicesResolver = {
         }
     },
     Mutation: {
-        createService: async (_parent, { service }, req) => {
-            // if (!req.isAuth) throw new Error('Unauthenticated');
-            const user = await User.findById("64588c572d6032dd97162aa6");
+        createService: async (_parent, { service }, context) => {
+
+            if(!context.isAuth) {
+                throw new Error("Unauthenticated");
+            }
+
+            const user = await User.findById(context.userId);
             const newService = new Service({
                 title: service.title,
                 description: service.description,

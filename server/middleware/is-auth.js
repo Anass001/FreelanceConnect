@@ -1,6 +1,8 @@
 import { verify } from 'jsonwebtoken';
 
-export default (req, res, next) => {
+const isAuth = (req, res, next) => {
+
+    // console.log(req.cookies.token)
 
     const token = req.cookies.token; // Get the token value from the 'token' cookie
 
@@ -12,7 +14,7 @@ export default (req, res, next) => {
 
     let decodedToken;
     try {
-        decodedToken = verify(token, 'my-private-key');
+        decodedToken = verify(token, process.env.JWT_KEY);
     } catch (err) {
         req.isAuth = false;
         console.log('Invalid token');
@@ -30,3 +32,5 @@ export default (req, res, next) => {
     console.log('Valid token');
     next();
 }
+
+export default isAuth;
