@@ -1,5 +1,5 @@
 import { GraphQLUpload } from 'graphql-upload';
-import cloudinary from 'cloudinary';
+import { v2 as cloudinary } from 'cloudinary'
 
 const UploadResolver = {
     Upload: GraphQLUpload,
@@ -80,11 +80,11 @@ const UploadResolver = {
             const uploadedFiles = await Promise.all(
                 files.map(async file => {
                     const { createReadStream, filename, mimetype, encoding } = await file;
-
                     const stream = createReadStream();
 
                     // Upload file to Cloudinary
                     const uploadResponse = await new Promise((resolve, reject) => {
+
                         const uploadStream = cloudinary.uploader.upload_stream(
                             { folder: 'freelance-connect' }, // Optional folder parameter
                             (error, result) => {
@@ -97,7 +97,6 @@ const UploadResolver = {
                                 }
                             }
                         );
-
                         stream.pipe(uploadStream);
                     });
 

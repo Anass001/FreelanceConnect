@@ -36,7 +36,7 @@ function Landing() {
 
       <div className="hero">
         <header>
-          <h3 className="main-navigation__logo">FreelancerConnect</h3>
+          <h3 className="main-navigation__logo">FreelanceConnect</h3>
           <nav ref={navRef}>
             <a href="#freelancers">For Freelancers</a>
             <a href="#quote">Why FreelanceConnect</a>
@@ -61,13 +61,13 @@ function Landing() {
           </div>
         </header>
         <div className="text-hero" id="home">
-          <h1>Welcome to FreelancerConnect</h1>
+          <h1>Welcome to FreelanceConnect</h1>
           <p>Find the best freelance services for your business</p>
-          {/* <div className="search-bar">
+          <div className="search-bar">
             <input type="text" placeholder="Search for any service..." />
             <FaSearch className="search-icon" />
 
-          </div> */}
+          </div>
           <br></br><br></br>
 
         </div>

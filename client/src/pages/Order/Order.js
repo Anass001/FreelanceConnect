@@ -96,6 +96,8 @@ function Messages(
     { conversation, messages, setMessages }
 ) {
 
+    const userId = useContext(UserContext).userId;
+
     const containerRef = useRef(null);
 
     const { data, loading, error } = useSubscription(MESSAGE_SUBSCRIPTION, {
@@ -135,17 +137,17 @@ function Messages(
                             }
                         });
                         if (
-                            message.sender === Cookies.get('userId')
+                            message.sender._id === userId
                         ) {
                             return (
-                                <SentMessage
+                                <ReceivedMessage
                                     message={message}
                                     user={user}
                                 />
                             )
                         } else {
                             return (
-                                <ReceivedMessage
+                                <SentMessage
                                     message={message}
                                     user={user}
                                 />
@@ -415,14 +417,14 @@ function Order() {
                                     }</p>
                                 </div>
                             </div>
-                            <div className='order__body__details__description col-xs-12'>
+                            {/* <div className='order__body__details__description col-xs-12'>
                                 <div className='order__body__details__item'>
                                     <p className='order__body__details__item__title'>Comment</p>
                                     <p className='order__body__details__item__content'>{
                                         data.orderById.service.description
                                     }</p>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         <GetOrderActions status={
                             data.orderById.status.toLowerCase()

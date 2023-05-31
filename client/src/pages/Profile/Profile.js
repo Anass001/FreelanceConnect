@@ -14,7 +14,7 @@ const GET_SERVICES_BY_USER_ID = gql`
     query GetServicesByUserId($userId: ID!) {
         servicesByUserId(userId: $userId) {
             _id
-            description
+            title
             price
             images
             freelancer {

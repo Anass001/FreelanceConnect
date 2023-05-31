@@ -106,7 +106,14 @@ const MainNavigation = () => {
                             </div>
                         </NavLink>
                     ) : (
-                        <div></div>
+                        <NavLink to="/orders" className="active-link orders-link">
+                            <div className="nav-link__wrapper">
+                                <span class="material-symbols-outlined">
+                                    archive
+                                </span>
+                                <p>Orders</p>
+                            </div>
+                        </NavLink>
                     )
                 }
                 {/* <NavLink to="/orders" className="active-link">

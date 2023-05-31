@@ -52,7 +52,7 @@
 .service-card__title{
     font-size: 18px;
     color: black;
-    margin: 0px 0px 0px 15px;
+    margin: 0px 15px 0px 15px;
 }
 
 .service-card__price__wrapper{

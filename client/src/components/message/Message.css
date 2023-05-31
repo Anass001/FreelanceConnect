@@ -23,3 +23,13 @@
     margin-right: 5px;
     font-size: 14px;
 }
+
+.message-sent p{
+    margin-left: 7px;
+    background-color: #f5f7fb;
+    color: black;
+}
+
+.message-sent{
+    justify-content: start;
+}
