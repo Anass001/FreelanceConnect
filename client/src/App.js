@@ -51,6 +51,7 @@ function MainWrapper({ token }) {
               <React.Fragment>
                 <MainNavigation />
                 <Routes>
+                  <Route path="/" element={<Home />} />
                   <Route exact path="/home" element={<Home />} />
                   <Route exact path='/services/:id' element={<Service />} />
                   <Route exact path="/create-service" element={<CreateService />} />

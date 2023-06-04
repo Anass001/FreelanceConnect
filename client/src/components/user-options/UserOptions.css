@@ -6,6 +6,7 @@
     height: 160px;
     background-color: #fff;
     box-shadow: 0px 0px 10px 0px #0000001a;
+    overflow: hidden;
 }
 
 .user-options__icon {
@@ -51,14 +52,68 @@
     padding: 0;
 }
 
-.user-options__body__item__content__time {
-    font-size: 12px;
-    color: #898989;
-    padding: 0;
-    margin: 10px 0px 0px 0px;
-}
-
 .user-options__body__item:hover {
     background-color: #f5f5f5;
     cursor: pointer;
+}
+
+.user-options__body__item__user-info {
+    display: none;
+}
+
+.user-options__user-section img {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.user-options__user-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.hide {
+    width: 0px;
+}
+
+@media screen and (max-width: 768px) {
+    .user-options__wrapper {
+        height: 100%;
+        /* 100% Full-height */
+        width: 250px;
+        /* 0 width - change this with JavaScript */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Stay on top */
+        top: 0;
+        /* Stay at the top */
+        right: 0;
+        background-color: #2DB67C;
+        /* Black*/
+        overflow-x: hidden;
+        /* Disable horizontal scroll */
+        padding-top: 60px;
+        /* Place content 60px from the top */
+        transition: width 0.5s ease;
+        /* 0.5 second transition effect to slide in the sidenav */
+    }
+
+    .hide {
+        width: 0px;
+    }
+
+    .user-options__body__item {
+        color: #fff;
+    }
+
+    .user-options__body__item:hover {
+        background-color: #2DB67C;
+    }
+
+    .user-options__body__item__user-info {
+        display: block;
+    }
 }

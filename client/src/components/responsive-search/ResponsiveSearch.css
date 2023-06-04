@@ -1,0 +1,41 @@
+.responsive-search__wrapper{
+    width: 0px;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #2DB67C; /* Black*/
+    height: 55px;
+    display: flex;
+    align-items: center;
+    color: white;
+    overflow: hidden;
+    justify-content: space-between;
+    transition: 0.3s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+.main-navigation__responsive-search-form{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.main-navigation__responsive-search-container{
+    padding: 0 10px;
+}
+
+.main-navigation__responsive-search-container input{
+    display: block;
+    color: white;
+    width: 100%;
+}
+
+.main-navigation__responsive-search-container input::placeholder{
+    color: #9dd2bc;
+}
+
+.responsive-search__close-icon{
+    padding: 10px;
+}

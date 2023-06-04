@@ -27,19 +27,24 @@ function ResponsiveSearch() {
             console.log(values);
             navigate(`/search/${values.search_query}`);
         },
+        onReset: values => {
+            console.log(values);
+        }
     });
 
     return (
         <div className="responsive-search">
-            <div className="responsive-search__icon">
+            <div className="responsive-search__icon" onClick={() => {
+                document.getElementsByClassName("responsive-search__wrapper")[0].style.width = "100%";
+            }}>
                 <span className="material-symbols-outlined">search</span>
             </div>
             <div className="responsive-search__wrapper">
                 <form
-                    className="main-navigation__search-form"
+                    className="main-navigation__responsive-search-form"
                     onSubmit={formik.handleSubmit}
                 >
-                    <div className="main-navigation__search-container">
+                    <div className="main-navigation__responsive-search-container">
                         <input
                             type="text"
                             name="search_query"
@@ -50,13 +55,14 @@ function ResponsiveSearch() {
                             onBlur={formik.handleBlur}
                             value={formik.values.search_query}
                         />
-                        <button
-                            type="submit"
-                            className="main-navigation__search-button">
-                            <i className="fa fa-search" aria-hidden="true"></i>
-                        </button>
                     </div>
                 </form>
+                <div className="responsive-search__close-icon" onClick={() => {
+                    document.getElementsByClassName("responsive-search__wrapper")[0].style.width = "0px";
+                    formik.resetForm();
+                }}>
+                    <span className="material-symbols-outlined">close</span>
+                </div>
             </div>
         </div>
     )

@@ -19,7 +19,7 @@ function UserOptions() {
 
   const navigate = useNavigate();
 
-  const userId = useContext(UserContext).userId;
+  const userData = useContext(UserContext);
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -55,10 +55,24 @@ function UserOptions() {
           <span className="material-symbols-outlined">account_circle</span>
         )}
       </div>
-      {show && (
-        <div className="user-options__wrapper">
+      {
+        <div className={`user-options__wrapper ${show ? 'show' : 'hide'}`}>
           <div className="user-options__body">
-            <Link to={`/user/${userId}`} onClick={handleOptionClick}>
+            <div className="user-options__body__item user-options__body__item__user-info" onClick={handleOptionClick}>
+              <div className="user-options__user-section">
+                <img src={userData.profilePicture} alt="avatar" />
+                <h3 className="user-options__user-section__name">{userData.username}</h3>
+              </div>
+            </div>
+            <Link to={`/user/${userData.userId}`} onClick={handleOptionClick}>
+              <div className="user-options__body__item">
+                <div className="user-options__body__item__content">
+                  <span className="material-symbols-outlined">person</span>
+                  <p className="user-options__body__item__content__message">Orders</p>
+                </div>
+              </div>
+            </Link>
+            <Link to={`/user/${userData.userId}`} onClick={handleOptionClick}>
               <div className="user-options__body__item">
                 <div className="user-options__body__item__content">
                   <span className="material-symbols-outlined">person</span>
@@ -85,7 +99,7 @@ function UserOptions() {
             </div>
           </div>
         </div>
-      )}
+      }
     </div>
   );
 }

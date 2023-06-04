@@ -95,43 +95,14 @@ const MainNavigation = () => {
                 {/* <NavLink to="/saved" activeClassName="active-link">
                     <i className="fa fa-heart" aria-hidden="true"></i>
                 </NavLink> */}
-                {
-                    isFreelancer ? (
-                        <NavLink to="/orders" className="active-link orders-link">
-                            <div className="nav-link__wrapper">
-                                <span class="material-symbols-outlined">
-                                    archive
-                                </span>
-                                <p>Orders</p>
-                            </div>
-                        </NavLink>
-                    ) : (
-                        <NavLink to="/orders" className="active-link orders-link">
-                            <div className="nav-link__wrapper">
-                                <span className="material-symbols-outlined">
-                                    receipt_long
-                                </span>
-                                <p>Orders</p>
-                            </div>
-                        </NavLink>
-                    )
-                }
-                {/* <NavLink to="/orders" className="active-link">
+                <NavLink to="/orders" className="active-link orders-link">
                     <div className="nav-link__wrapper">
-                        <span className="material-symbols-outlined">
-                            receipt_long
+                        <span class="material-symbols-outlined">
+                            {isFreelancer ? "archive" : "receipt_long"}
                         </span>
                         <p>Orders</p>
                     </div>
-                </NavLink> */}
-                {/* <a href="/" onClick={handleUserDropdownClick}>
-                    <i className="fa fa-user" aria-hidden="true"></i> */}
-                {/* <div className="main-navigation__user-dropdown">
-                        <a href="/">Profile</a>
-                        <a href="/">Settings</a>
-                        <a href="/">Logout</a>
-                    </div> */}
-                {/* </a> */}
+                </NavLink>
                 <ResponsiveSearch />
                 <UserOptions />
             </div>
