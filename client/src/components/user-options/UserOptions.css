@@ -33,7 +33,6 @@
     font-size: 16px;
     color: #898989;
     padding: 15px;
-
 }
 
 .user-options__body__item__content {
@@ -78,6 +77,14 @@
     width: 0px;
 }
 
+.user-options__body__item__user-orders{
+    display: none;
+}
+
+.close__user-option__btn{
+    display: none;
+}
+
 @media screen and (max-width: 768px) {
     .user-options__wrapper {
         height: 100%;
@@ -107,6 +114,7 @@
 
     .user-options__body__item {
         color: #fff;
+        padding: 15px 32px;
     }
 
     .user-options__body__item:hover {
@@ -115,5 +123,18 @@
 
     .user-options__body__item__user-info {
         display: block;
+    }
+
+    .user-options__body__item__user-orders{
+        display: block;
+    }
+
+    .close__user-option__btn{
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 25px;
+        color: white;
     }
 }

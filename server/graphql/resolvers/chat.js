@@ -47,6 +47,7 @@ const ChatResolver = {
                 const result = await newMessage.save();
 
                 const conversation = await Conversation.findById(message.conversation);
+
                 if (context.userId !== conversation.users[0]._id.toString() && context.userId !== conversation.users[1]._id.toString()) {
                     throw new Error("Unauthorized");
                 }

@@ -37,11 +37,16 @@ function NavigationDrawer() {
             </div>
 
             <div className="navigation-drawer__items">
-                <a href="javascript:void(0)" class="closebtn" onClick={closeNavigationDrawer}>&times;</a>
+
+                <a href="javascript:void(0)" class="closebtn" onClick={closeNavigationDrawer}>
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </a>
                 <a href="#">Home</a>
                 <h6>CATEGORIES</h6>
                 {
-                    data && 
+                    data &&
                     data.categories.map((category, index) => {
                         return (
                             <NavLink to={`/categories/${category.url_name}`} className="navigation-drawer__link" key={index}>

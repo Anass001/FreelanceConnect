@@ -89,7 +89,7 @@ const OrdersResolver = {
             try {
                 const order = await Order.findById(orderId);
 
-                if (context.userId !== order.client && context.userId !== order.freelancer) {
+                if (context.userId !== order.client._id.toString() && context.userId !== order.freelancer._id.toString()) {
                     throw new Error('Unauthenticated!');
                 }
 

@@ -4,7 +4,10 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.7.14",
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
     "@fortawesome/fontawesome-free": "^6.4.0",
+    "@mui/material": "^5.13.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",

@@ -21,10 +21,6 @@ const reviewSchema = new Schema({
     order: {
         type: Schema.Types.ObjectId,
         ref: 'Order'
-    },
-    service: {
-        type: Schema.Types.ObjectId,
-        ref: 'Service'
     }
 });
 

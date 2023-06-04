@@ -3,22 +3,28 @@ import { gql } from 'apollo-server-express';
 const Schema = gql`
 
 type Query {
-  services: [Service]!,
-  categories: [Category]!,
   login(email: String!, password: String!): AuthData!,
+  user(userId: ID!): User!,
+  getUserByToken(token: String!): User!,
+
   reviewsByUserId(userId: ID!): [Review]!,
   reviewsByServiceId(serviceId: ID!): [Review]!,
+  reviewsByOrderId(orderId: ID!): [Review]!,
+
+  services: [Service]!,
   servicesByUserId(userId: ID!): [Service]!,
   servicesByCategory(category: String!): [Service]!,
   servicesByCategoryUrlName(categoryUrlName: String!): [Service]!,
   service(serviceId: ID!): Service!,
   servicesBySearchQuery(searchQuery: String!): [Service]!,
-  user(userId: ID!): User!,
+
+  categories: [Category]!,
+
   ordersByClientId(userId: ID!): [Order]!,
   ordersByFreelancerId(userId: ID!): [Order]!,
   orderById(orderId: ID!): Order!,
+
   conversationByOrderId(orderId: ID!): Conversation!,
-  getUserByToken(token: String!): User!,
 },
 
 type Mutation {
@@ -61,17 +67,13 @@ type Review {
   content: String!,
   date: String!,
   order: Order,
-  service: Service,
 },
 
 input ReviewInput {
-  reviewer: ID!,
   reviewee: ID!,
   rating: Float!,
   content: String!,
-  date: String!,
   order: ID,
-  service: ID,
 },
 
 type Notification {

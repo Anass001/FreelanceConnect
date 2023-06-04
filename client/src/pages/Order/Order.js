@@ -12,6 +12,8 @@ import { formatDate } from '../../utils/FormatUtils';
 import { useRef } from 'react';
 import { useContext } from 'react';
 import UserContext from '../../UserContext';
+import ReviewInput from '../../components/review/ReviewInput';
+import Review from '../../components/review/Review';
 
 const GET_ORDER = gql`
     query getOrder($orderId: ID!) {
@@ -87,6 +89,21 @@ const MESSAGE_SUBSCRIPTION = gql`
             body
             sender {
                 _id
+            }
+        }
+    }
+`;
+
+const GET_REVIEWS_BY_ORDER_ID = gql`
+    query getReviewsByOrderId($orderId: ID!) {
+        reviewsByOrderId(orderId: $orderId) {
+            _id
+            rating
+            content
+            reviewer {
+                _id
+                username
+                profile_picture
             }
         }
     }
@@ -337,6 +354,8 @@ function Order() {
 
     const userId = userData.userId;
 
+    const isFreelancer = Cookies.get('isFreelancer');
+
     const [messages, setMessages] = useState([]);
 
     const [message, setMessage] = useState('');
@@ -346,6 +365,11 @@ function Order() {
     }
 
     const { loading: loadingConversation, error: errorConversation, data: dataConversation } = useQuery(GET_CONVERSATION_BY_ORDER_ID, {
+        variables: { orderId: orderId },
+    }
+    );
+
+    const { loading: loadingReviews, error: errorReviews, data: dataReviews } = useQuery(GET_REVIEWS_BY_ORDER_ID, {
         variables: { orderId: orderId },
     }
     );
@@ -376,48 +400,49 @@ function Order() {
 
     return (
         data && (
-            <div className='order__container col-xs-12 col-sm-12 col-md-8 col-lg-8'>
-                <div className='order__header'>
-                    <div className='order__header__title'>
-                        <h1>Order</h1>
-                        <h2 className='order__header__id'>#{data.orderById._id.slice(-6)}</h2>
-                    </div>
-                    <GetOrderStatus status={
-                        data.orderById.status.toLowerCase()
-                    } />
-                </div>
-                <div className='order__body'>
-                    <div className='order__body__service'>
-                        <div className='order__body__client'>
+            <div className='order__container row'>
+                <div className='order__content__wrapper col-xs-12 col-sm-12 col-md-8 col-lg-8'>
+                    <div className='order__header'>
+                        <div className='order__header__title'>
+                            <h1>Order</h1>
+                            <h2 className='order__header__id'>#{data.orderById._id.slice(-6)}</h2>
                         </div>
-                        <ServiceCardHorizontal service={getService(data)} />
+                        <GetOrderStatus status={
+                            data.orderById.status.toLowerCase()
+                        } />
                     </div>
-                    <div className='order__body__details'>
-                        <h2>Details</h2>
-                        <div className='order__body__details__container row'>
-                            <div className='order__body__details__info col-xs-12'>
-                                <div className='order__body__details__item'>
-                                    <p className='order__body__details__item__title'>Client</p>
-                                    <p className='order__body__details__item__content'>{data.orderById.client.username}</p>
-                                </div>
-                                <div className='order__body__details__item'>
-                                    <p className='order__body__details__item__title'>Deadline</p>
-                                    <p className='order__body__details__item__content'>{
-                                        formatDate(new Date(data.orderById.deadline))
-                                    }</p>
-                                </div>
-                                <div className='order__body__details__item'>
-                                    <p className='order__body__details__item__title'>Price</p>
-                                    <p className='order__body__details__item__content'>${data.orderById.price}</p>
-                                </div>
-                                <div className='order__body__details__item'>
-                                    <p className='order__body__details__item__title'>Ordered on</p>
-                                    <p className='order__body__details__item__content'>{
-                                        formatDate(new Date(data.orderById.date))
-                                    }</p>
-                                </div>
+                    <div className='order__body'>
+                        <div className='order__body__service'>
+                            <div className='order__body__client'>
                             </div>
-                            {/* <div className='order__body__details__description col-xs-12'>
+                            <ServiceCardHorizontal service={getService(data)} />
+                        </div>
+                        <div className='order__body__details'>
+                            <h2>Details</h2>
+                            <div className='order__body__details__container row'>
+                                <div className='order__body__details__info col-xs-12'>
+                                    <div className='order__body__details__item'>
+                                        <p className='order__body__details__item__title'>Client</p>
+                                        <p className='order__body__details__item__content'>{data.orderById.client.username}</p>
+                                    </div>
+                                    <div className='order__body__details__item'>
+                                        <p className='order__body__details__item__title'>Deadline</p>
+                                        <p className='order__body__details__item__content'>{
+                                            formatDate(new Date(data.orderById.deadline))
+                                        }</p>
+                                    </div>
+                                    <div className='order__body__details__item'>
+                                        <p className='order__body__details__item__title'>Price</p>
+                                        <p className='order__body__details__item__content'>${data.orderById.price}</p>
+                                    </div>
+                                    <div className='order__body__details__item'>
+                                        <p className='order__body__details__item__title'>Ordered on</p>
+                                        <p className='order__body__details__item__content'>{
+                                            formatDate(new Date(data.orderById.date))
+                                        }</p>
+                                    </div>
+                                </div>
+                                {/* <div className='order__body__details__description col-xs-12'>
                                 <div className='order__body__details__item'>
                                     <p className='order__body__details__item__title'>Comment</p>
                                     <p className='order__body__details__item__content'>{
@@ -425,59 +450,94 @@ function Order() {
                                     }</p>
                                 </div>
                             </div> */}
-                        </div>
-                        <GetOrderActions status={
-                            data.orderById.status.toLowerCase()
-                        }
-                            updateOrderStatus={
-                                updateOrderStatus
+                            </div>
+                            <GetOrderActions status={
+                                data.orderById.status.toLowerCase()
                             }
-                            orderId={
-                                data.orderById._id
-                            } />
-                    </div>
-                    <div className='order__body__chat'>
-                    </div>
-                </div>
-                <div className='order__chat'>
-                    <div className='order__chat__container'>
-                        <div className='order__chat__messages'>
-                            <div className='order__chat__messages__container'>
-                                {
-                                    dataConversation &&
-                                    <Messages conversation={dataConversation.conversationByOrderId}
-                                        messages={messages}
-                                        setMessages={setMessages}
-                                    />
+                                updateOrderStatus={
+                                    updateOrderStatus
                                 }
+                                orderId={
+                                    data.orderById._id
+                                } />
+                        </div>
+                        <div className='order__body__chat'>
+                        </div>
+                    </div>
+                    <div className='order__chat'>
+                        <div className='order__chat__container'>
+                            <div className='order__chat__messages'>
+                                <div className='order__chat__messages__container'>
+                                    {
+                                        dataConversation &&
+                                        <Messages conversation={dataConversation.conversationByOrderId}
+                                            messages={messages}
+                                            setMessages={setMessages}
+                                        />
+                                    }
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    {(data.orderById.status.toLowerCase() === 'in_progress' || data.orderById.status.toLowerCase() === 'pending') &&
-                        <div className='order__chat__input'>
-                            <input
-                                onChange={handleMessageChange}
-                                value={message}
-                                type='text' placeholder='Type a message...' />
-                            <button
-                                onClick={
-                                    () => {
-                                        sendMessage({
-                                            variables: {
-                                                conversation: dataConversation.conversationByOrderId._id,
-                                                sender: userId,
-                                                body: message
-                                            }
-                                        });
-                                        setMessage('');
+                        {(data.orderById.status.toLowerCase() === 'in_progress' || data.orderById.status.toLowerCase() === 'pending') &&
+                            <div className='order__chat__input'>
+                                <input
+                                    onChange={handleMessageChange}
+                                    value={message}
+                                    type='text' placeholder='Type a message...' />
+                                <button
+                                    onClick={
+                                        () => {
+                                            sendMessage({
+                                                variables: {
+                                                    conversation: dataConversation.conversationByOrderId._id,
+                                                    sender: userId,
+                                                    body: message
+                                                }
+                                            });
+                                            setMessage('');
+                                        }
                                     }
-                                }
-                                className='order__chat__send-button'>
-                                <span class="material-symbols-outlined">
-                                    send
-                                </span>
-                            </button>
-                        </div>
+                                    className='order__chat__send-button'>
+                                    <span class="material-symbols-outlined">
+                                        send
+                                    </span>
+                                </button>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div className='order__reviews col-xs-12 col-sm-12 col-md-4 col-lg-4'>
+                    <div className='order__previous-reviews__wrapper'>
+                        {
+                            dataReviews.reviewsByOrderId && dataReviews.reviewsByOrderId.map((review) => {
+                                return (
+                                    <div className='old__review__container'>
+                                        {
+                                            review.reviewer._id === userId ? <h2>Your review</h2> :
+                                                review.reviewer._id === data.orderById.client._id ? <h2>Client's review</h2> : <h2>Freelancer's review</h2>
+
+                                        }
+                                        <Review
+                                            key={review._id}
+                                            src={review.reviewer.profile_picture} name={review.reviewer.username} value={review.rating}>
+                                            <p>
+                                                {review.content}
+                                            </p>
+                                        </Review>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                    {
+                        !dataReviews.reviewsByOrderId.find(
+                            (review) => review.reviewer._id === userId
+                        ) && data.orderById.status.toLowerCase() === 'closed' &&
+                        <ReviewInput orderId={orderId}
+                            revieweeId={
+                                (userId === data.orderById.client._id) ? data.orderById.freelancer._id : data.orderById.client._id
+                            }
+                        />
                     }
                 </div>
             </div >

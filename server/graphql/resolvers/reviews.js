@@ -21,6 +21,16 @@ const ReviewsResolver = {
             } catch (err) {
                 throw err;
             }
+        },
+        reviewsByOrderId: async (_parent, { orderId }, req) => {
+            try {
+                const reviews = await Review.find({ order: orderId }).populate('reviewer', 'username profile_picture');
+                return reviews.map(review => {
+                    return { ...review._doc, _id: review.id };
+                });
+            } catch (err) {
+                throw err;
+            }
         }
     },
     Mutation: {
@@ -30,12 +40,12 @@ const ReviewsResolver = {
             }
             const newReview = new Review({
                 // TODO: userId should be included in token in order to be able to create a review
-                reviewer: review.reviewer,
+                reviewer: context.userId,
                 reviewee: review.reviewee,
                 rating: review.rating,
                 content: review.content,
                 date: Date.now(),
-                service: review.service,
+                order: review.order,
             });
             try {
                 const result = await newReview.save();

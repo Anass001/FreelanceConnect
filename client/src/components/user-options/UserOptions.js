@@ -19,6 +19,8 @@ function UserOptions() {
 
   const navigate = useNavigate();
 
+  const isFreelancer = Cookies.get('isFreelancer') === 'true';
+
   const userData = useContext(UserContext);
 
   useEffect(() => {
@@ -56,20 +58,30 @@ function UserOptions() {
         )}
       </div>
       {
+
         <div className={`user-options__wrapper ${show ? 'show' : 'hide'}`}>
           <div className="user-options__body">
+            <span class="material-symbols-outlined close__user-option__btn" onClick={showUserOptions}>
+              close
+            </span>
+            {/* <a href="javascript:void(0)" class="closebtn" onClick={setShow(false)}>&times;</a> */}
             <div className="user-options__body__item user-options__body__item__user-info" onClick={handleOptionClick}>
               <div className="user-options__user-section">
                 <img src={userData.profilePicture} alt="avatar" />
                 <h3 className="user-options__user-section__name">{userData.username}</h3>
               </div>
             </div>
-            <Link to={`/user/${userData.userId}`} onClick={handleOptionClick}>
-              <div className="user-options__body__item">
+            <Link to={`/orders`} onClick={handleOptionClick}>
+              <div className="user-options__body__item user-options__body__item__user-orders">
                 <div className="user-options__body__item__content">
-                  <span className="material-symbols-outlined">person</span>
+                  <span className="material-symbols-outlined">
+                    {
+                      isFreelancer ? "archive" : "receipt_long"
+                    }
+                  </span>
                   <p className="user-options__body__item__content__message">Orders</p>
                 </div>
+                <br />
               </div>
             </Link>
             <Link to={`/user/${userData.userId}`} onClick={handleOptionClick}>
