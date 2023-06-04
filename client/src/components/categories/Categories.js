@@ -7,7 +7,7 @@ function Categories({ categories }) {
         <div className="categories">
             <ul>
                 <li>
-                    <NavLink to="/" className={({ isActive }) => {
+                    <NavLink to="/home" className={({ isActive }) => {
                         if (isActive) return "active-link";
                         return "inactive-link";
                     }}>

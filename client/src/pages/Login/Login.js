@@ -47,7 +47,7 @@ function Login() {
         Cookies.set('token', data.login.token, { expires: data.login.tokenExpiration });
         Cookies.set('isFreelancer', 'true', { expires: data.login.tokenExpiration });
         // Cookies.set('userId', data.login.userId, { expires: data.login.tokenExpiration});
-        navigate('/');
+        navigate('/home');
         window.location.reload();
     }
 

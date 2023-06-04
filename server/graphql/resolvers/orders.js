@@ -6,7 +6,7 @@ const OrdersResolver = {
         ordersByClientId: async (_parent, { userId }, context) => {
             if (!context.isAuth || context.userId !== userId) {
                 throw new Error('Unauthenticated!');
-            } 
+            }
             try {
                 const orders = await Order.find({ client: userId })
                     .populate('freelancer', 'username profile_picture')
@@ -19,11 +19,13 @@ const OrdersResolver = {
             }
         },
         ordersByFreelancerId: async (_parent, { userId }, context) => {
-            if (!context.isAuth) {
+            if (!context.isAuth || context.userId !== userId) {
                 throw new Error('Unauthenticated!');
             }
             try {
-                const orders = await Order.find({ freelancer: userId }).populate('order_service');
+                const orders = await Order.find({ freelancer: userId })
+                    .populate('client', 'username profile_picture')
+                    .populate('service', 'title');
                 return orders.map(order => {
                     return { ...order._doc, _id: order._id };
                 });
@@ -63,9 +65,9 @@ const OrdersResolver = {
                     price: order.price,
                 });
                 const result = await newOrder.save();
-        
 
-                console.log("hello"+result._id)
+
+                console.log("hello" + result._id)
 
                 const newConversation = new Conversation({
                     users: [order.client, order.freelancer],
@@ -80,9 +82,17 @@ const OrdersResolver = {
                 throw err;
             }
         },
-        updateOrderStatus: async (_parent, { orderId, status }) => {
+        updateOrderStatus: async (_parent, { orderId, status }, context) => {
+            if (!context.isAuth) {
+                throw new Error('Unauthenticated!');
+            }
             try {
                 const order = await Order.findById(orderId);
+
+                if (context.userId !== order.client && context.userId !== order.freelancer) {
+                    throw new Error('Unauthenticated!');
+                }
+
                 order.status = status;
                 const result = await order.save();
                 return { ...result._doc, _id: result._id };

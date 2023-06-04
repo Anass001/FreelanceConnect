@@ -51,7 +51,7 @@ function MainWrapper({ token }) {
               <React.Fragment>
                 <MainNavigation />
                 <Routes>
-                  <Route exact path="/" element={<Home />} />
+                  <Route exact path="/home" element={<Home />} />
                   <Route exact path='/services/:id' element={<Service />} />
                   <Route exact path="/create-service" element={<CreateService />} />
                   <Route exact path="/user/:id" element={<Profile />} />
@@ -81,9 +81,15 @@ function App() {
       <div className="unauthenticated-content__container">
         <BrowserRouter>
           <Routes>
-            <Route path="*" element={<Landing />} />
+            <Route path="/" element={<Landing />} />
+            <Route path="*" element={<Login />} />
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/signup" element={<Signup />} />
+            <Route exact path='/services/:id' element={<Service />} />
+            {/* <Route exact path="/home" element={<Home />} /> */}
+            <Route exact path="/user/:id" element={<Profile />} />
+            <Route exact path="/search/:query" element={<Search />} />
+            {/* <Route exact path="/categories/:category" element={<Category />} /> */}
           </Routes>
         </BrowserRouter>
       </div>

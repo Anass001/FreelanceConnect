@@ -5,7 +5,9 @@ const UploadResolver = {
     Upload: GraphQLUpload,
     Mutation: {
         uploadPhoto: async (_parent, { photo }, req) => {
-
+            if (!context.isAuth) {
+                throw new Error('Unauthenticated!');
+            }
             cloudinary.config({
                 cloud_name: process.env.CLOUDINARY_NAME,
                 api_key: process.env.CLOUDINARY_API_KEY,
@@ -33,7 +35,9 @@ const UploadResolver = {
             }
         },
         singleUpload: async (parent, { file }) => {
-
+            if (!context.isAuth) {
+                throw new Error('Unauthenticated!');
+            }
             cloudinary.config({
                 cloud_name: process.env.CLOUDINARY_NAME,
                 api_key: process.env.CLOUDINARY_API_KEY,
@@ -69,8 +73,10 @@ const UploadResolver = {
                 cloudinaryUrl: uploadResponse.secure_url // Optional: Return the Cloudinary URL
             };
         },
-        multipleUpload: async (parent, { files }) => {
-
+        multipleUpload: async (parent, { files }, context) => {
+            if (!context.isAuth) {
+                throw new Error('Unauthenticated!');
+            }
             cloudinary.config({
                 cloud_name: process.env.CLOUDINARY_NAME,
                 api_key: process.env.CLOUDINARY_API_KEY,
@@ -108,7 +114,7 @@ const UploadResolver = {
                     };
                 })
             );
-            
+
             return uploadedFiles;
         }
     }

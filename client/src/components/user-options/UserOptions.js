@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './UserOptions.css';
 import Cookies from 'js-cookie';
 import UserContext from '../../UserContext';
+import { useNavigate } from 'react-router-dom';
 
 function logout() {
   Cookies.remove('token');
@@ -15,6 +16,8 @@ function UserOptions() {
   const userOptionsRef = useRef(null);
 
   const showUserOptions = () => setShow(!show);
+
+  const navigate = useNavigate();
 
   const userId = useContext(UserContext).userId;
 
@@ -69,7 +72,12 @@ function UserOptions() {
                 <p className="user-options__body__item__content__message">Switch</p>
               </div>
             </div>
-            <div className="user-options__body__item" onClick={() => {handleOptionClick(); logout();}}>
+            <div className="user-options__body__item" onClick={() => {
+              handleOptionClick();
+              Cookies.remove('token');
+              navigate('/login');
+              window.location.reload();
+            }}>
               <div className="user-options__body__item__content">
                 <span className="material-symbols-outlined">logout</span>
                 <p className="user-options__body__item__content__message">Logout</p>

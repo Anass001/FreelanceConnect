@@ -13,12 +13,19 @@ const ChatResolver = {
         }
     },
     Query: {
-        conversationByOrderId: async (_parent, { orderId }) => {
+        conversationByOrderId: async (_parent, { orderId }, context) => {
+            if (!context.isAuth) {
+                throw new Error("Unauthenticated");
+            }
             try {
                 const conversation = await Conversation.findOne({ order: orderId })
                     .populate('messages')
                     .populate('users', 'username profile_picture')
-                console.log(conversation.messages)
+
+                if (context.userId !== conversation.users[0]._id.toString() && context.userId !== conversation.users[1]._id.toString()) {
+                    throw new Error("Unauthorized");
+                }
+
                 return { ...conversation._doc, _id: conversation._id };
             } catch (err) {
                 throw err;
@@ -26,10 +33,10 @@ const ChatResolver = {
         }
     },
     Mutation: {
-        sendMessage: async (_parent, { message }, { req }) => {
-            // if (!req.isAuth) {
-            //     throw new Error('Unauthenticated!');
-            // }
+        sendMessage: async (_parent, { message }, context) => {
+            if (!context.isAuth) {
+                throw new Error("Unauthenticated");
+            }
             try {
                 const newMessage = new Message({
                     sender: message.sender,
@@ -39,11 +46,15 @@ const ChatResolver = {
                 });
                 const result = await newMessage.save();
 
+                const conversation = await Conversation.findById(message.conversation);
+                if (context.userId !== conversation.users[0]._id.toString() && context.userId !== conversation.users[1]._id.toString()) {
+                    throw new Error("Unauthorized");
+                }
+
                 pubsub.publish(message.conversation, {
                     messageSent: { ...result._doc, _id: result._id }
                 });
 
-                const conversation = await Conversation.findById(message.conversation);
                 conversation.messages.push(result._id);
                 await conversation.save();
 

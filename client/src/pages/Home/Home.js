@@ -41,7 +41,7 @@ function Services() {
     return (
         <div className="services__grid__wrapper row">
             {data.services.map((service) => (
-                <div className="col-xs-12 col-sm-8 col-md-6 col-lg-3">
+                <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                     <Suspense fallback={<div> Please Wait... </div>} >
                         <ServiceCard key={service._id} service={service} />
                     </Suspense>

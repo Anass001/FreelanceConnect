@@ -24,15 +24,17 @@ const ReviewsResolver = {
         }
     },
     Mutation: {
-        createReview: async (_parent, { review }, req) => {
-            if (!req.isAuth) throw new Error('Unauthenticated');
+        createReview: async (_parent, { review }, context) => {
+            if (!context.isAuth) {
+                throw new Error('Unauthenticated!');
+            }
             const newReview = new Review({
                 // TODO: userId should be included in token in order to be able to create a review
                 reviewer: review.reviewer,
                 reviewee: review.reviewee,
                 rating: review.rating,
                 content: review.content,
-                date: Date.now(),   
+                date: Date.now(),
                 service: review.service,
             });
             try {

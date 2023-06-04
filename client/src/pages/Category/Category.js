@@ -49,7 +49,7 @@ function Services() {
         <div className="services__grid__wrapper row">
             {data &&
                 data.servicesByCategoryUrlName.map((service) => (
-                    <div className="col-xs-12 col-sm-8 col-md-6 col-lg-3">
+                    <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                         <ServiceCard key={service._id} service={service} />
                     </div>
                 ))}

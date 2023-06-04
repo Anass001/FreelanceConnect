@@ -59,7 +59,7 @@ const MainNavigation = () => {
     return (
         <header>
             <NavigationDrawer />
-            <NavLink to="/" className="active-link">
+            <NavLink to="/home" className="active-link">
                 <div className="main-navigation__logo">FreelanceConnect</div>
             </NavLink>
             <form
@@ -99,8 +99,8 @@ const MainNavigation = () => {
                     isFreelancer ? (
                         <NavLink to="/orders" className="active-link orders-link">
                             <div className="nav-link__wrapper">
-                                <span className="material-symbols-outlined">
-                                    receipt_long
+                                <span class="material-symbols-outlined">
+                                    archive
                                 </span>
                                 <p>Orders</p>
                             </div>
@@ -108,8 +108,8 @@ const MainNavigation = () => {
                     ) : (
                         <NavLink to="/orders" className="active-link orders-link">
                             <div className="nav-link__wrapper">
-                                <span class="material-symbols-outlined">
-                                    archive
+                                <span className="material-symbols-outlined">
+                                    receipt_long
                                 </span>
                                 <p>Orders</p>
                             </div>

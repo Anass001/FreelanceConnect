@@ -14,8 +14,12 @@ const CategoriesResolver = {
         },
     },
     Mutation: {
-        createCategory: async (_parent, { category }, req) => {
-            if (!req.isAuth) throw new Error('Unauthenticated');
+        createCategory: async (_parent, { category }, context) => {
+
+            if (!context.isAuth) {
+                throw new Error('Unauthenticated!');
+            }
+
             const newCategory = new Category({
                 name: category.name,
                 description: category.description,
