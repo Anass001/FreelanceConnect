@@ -15,6 +15,7 @@ const GET_SERVICES = gql`
             description
             price
             images
+            rating
             freelancer {
                 _id
                 username

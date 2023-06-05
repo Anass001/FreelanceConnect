@@ -11,7 +11,8 @@ const reviewSchema = new Schema({
     },
     rating: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
     },
     content: {
         type: String,
@@ -21,6 +22,10 @@ const reviewSchema = new Schema({
     order: {
         type: Schema.Types.ObjectId,
         ref: 'Order'
+    },
+    service: {
+        type: Schema.Types.ObjectId,
+        ref: 'Service'
     }
 });
 

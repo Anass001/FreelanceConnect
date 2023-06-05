@@ -16,14 +16,14 @@ const validate = (rating, content) => {
 };
 
 const CREATE_REVIEW = gql`
-    mutation CreateReview($order: ID!, $rating: Float!, $content: String!, $reviewee: ID!) {
-        createReview(review: { order: $order, rating: $rating, content: $content, reviewee: $reviewee }){
+    mutation CreateReview($order: ID!, $rating: Float!, $content: String!, $reviewee: ID!, $service: ID!) {
+        createReview(review: { order: $order, rating: $rating, content: $content, reviewee: $reviewee, service: $service }){
             _id
         }
     }
 `;
 
-function ReviewInput({ orderId, revieweeId }) {
+function ReviewInput({ orderId, revieweeId, serviceId }) {
 
     const [createReview] = useMutation(CREATE_REVIEW, {
         onCompleted: () => {
@@ -45,7 +45,7 @@ function ReviewInput({ orderId, revieweeId }) {
         validate,
         onSubmit: (values) => {
             console.log(values);
-            createReview({ variables: { order: orderId, rating: values.rating, content: values.content, reviewee: revieweeId } });
+            createReview({ variables: { order: orderId, rating: values.rating, content: values.content, reviewee: revieweeId, service: serviceId } });
         },
     });
 

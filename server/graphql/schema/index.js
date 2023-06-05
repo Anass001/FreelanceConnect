@@ -67,6 +67,7 @@ type Review {
   content: String!,
   date: String!,
   order: Order,
+  service: Service,
 },
 
 input ReviewInput {
@@ -74,6 +75,7 @@ input ReviewInput {
   rating: Float!,
   content: String!,
   order: ID,
+  service: ID,
 },
 
 type Notification {

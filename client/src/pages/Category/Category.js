@@ -24,6 +24,7 @@ const GET_SERVICES_BY_CATEGORY_URL_NAME = gql`
             description
             price
             images
+            rating
             freelancer {
                 _id
                 username

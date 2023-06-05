@@ -13,8 +13,14 @@ const userSchema = new Schema({
     joined_date: String,
     last_login: String,
     is_active: Boolean,
-    freelance_rating: Number,
-    client_rating: Number,
+    freelance_rating: {
+        type: Number,
+        default: 0
+    },
+    client_rating: {
+        type: Number,
+        default: 0  
+    },
     earnings: Number,
     balance: Number,
     spending: Number,

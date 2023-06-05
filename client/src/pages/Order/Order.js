@@ -24,6 +24,7 @@ const GET_ORDER = gql`
                 title
                 description
                 images
+                rating
             }
             client {
                 _id
@@ -515,7 +516,6 @@ function Order() {
                                         {
                                             review.reviewer._id === userId ? <h2>Your review</h2> :
                                                 review.reviewer._id === data.orderById.client._id ? <h2>Client's review</h2> : <h2>Freelancer's review</h2>
-
                                         }
                                         <Review
                                             key={review._id}
@@ -533,7 +533,7 @@ function Order() {
                         !dataReviews.reviewsByOrderId.find(
                             (review) => review.reviewer._id === userId
                         ) && data.orderById.status.toLowerCase() === 'closed' &&
-                        <ReviewInput orderId={orderId}
+                        <ReviewInput orderId={orderId} serviceId={data.orderById.service._id}
                             revieweeId={
                                 (userId === data.orderById.client._id) ? data.orderById.freelancer._id : data.orderById.client._id
                             }
