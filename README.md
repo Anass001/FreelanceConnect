@@ -45,6 +45,14 @@ This project utilizes the following technologies:
 
 - **Other libraries and tools:** React Router, Apollo Client, GraphQL-Upload, Nodemon, etc.
 
+## API Documentation
+
+The API of this project follows the GraphQL specification. Below is an overview of the available queries, mutations, and subscriptions:
+
+### Queries
+### Mutations
+### Subscriptions
+
 ## Project Setup and Installation
 
 To run this project locally or deploy it to a server using NGINX, follow the steps below:
