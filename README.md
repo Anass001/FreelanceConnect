@@ -50,8 +50,57 @@ This project utilizes the following technologies:
 The API of this project follows the GraphQL specification. Below is an overview of the available queries, mutations, and subscriptions:
 
 ### Queries
+
+#### `login`
+- Description: Authenticates a user based on their email and password.
+- Input:
+  - `email: String!` - The user's email address.
+  - `password: String!` - The user's password.
+- Output:
+  - `AuthData` - An object containing the user's authentication token and user information.
+
+#### `user`
+- Description: Retrieves information about a specific user.
+- Input:
+  - `userId: ID!` - The unique identifier of the user.
+- Output:
+  - `User` - The user object containing information such as username, email, and profile details.
+
+#### `service`
+- Description: Retrieves information about a specific service.
+- Input:
+  - `serviceId: ID!` - The unique identifier of the service.
+- Output:
+  - `Service` - The service object containing information such as title, description, and pricing.
+
 ### Mutations
+
+#### `createUser`
+
+- Description: Creates a new user.
+- Input:
+  - `user: UserInput` - The user object with details such as username, email, and password.
+- Output:
+  - `User` - The newly created user object.
+
+#### `createService`
+
+- Description: Creates a new service.
+- Input:
+  - `service: ServiceInput` - The service object with details such as title, description, and pricing.
+- Output:
+  - `Service` - The newly created service object.
+
 ### Subscriptions
+
+#### `messageSent`
+- Description: Subscribes to new messages in a conversation.
+- Input:
+  - `conversationId: ID!` - The unique identifier of the conversation.
+- Output:
+  - `Message` - The newly sent message object.
+
+Refer to the GraphQL schema and corresponding resolvers for detailed information about the input and output types of each field.
 
 ## Project Setup and Installation
 
