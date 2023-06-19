@@ -9,6 +9,38 @@ FreelanceConnect is a website developed using Node.js, MongoDB, React, and Graph
 * Course Module:
   - Développement web et frameworks
 
+## Features
+This project includes the following features:
+
+- **User Authentication**: Users can register an account, log in, and log out. Authentication is handled using JSON Web Tokens (JWT) for secure access to protected routes.
+- **CRUD Operations**: Users can perform CRUD (Create, Read, Update, Delete) operations on various entities in the application, such as creating, editing, and deleting services or orders.
+- **Real-time Messaging**: The application utilizes GraphQL subscriptions to provide real-time messaging functionality. Users can send and receive messages in real-time without needing to refresh the page.
+- **Image Upload**: Users can upload images to the application using the Cloudinary platform. The uploaded media is securely stored and accessible in the application.
+- **Search Functionality**: Users can search for specific content within the application using keywords. The search functionality provides relevant and filtered results based on user queries.
+- **Responsive Design**: The application is designed to be responsive and accessible across different devices and screen sizes, providing a seamless experience for users on desktops, tablets, and mobile devices.
+- **Error Handling**: The application includes robust error handling mechanisms to gracefully handle and display error messages when encountering failures or invalid input.
+- **Security**: Various security measures are implemented, including secure password hashing, input validation, and authorization checks to protect user data and prevent unauthorized access.
+
+## Technologies Used
+
+This project utilizes the following technologies:
+
+- **MERN Stack:**
+  - MongoDB: A NoSQL database for storing data.
+  - Express.js: A web application framework for building the server-side application.
+  - React: A JavaScript library for building user interfaces.
+  - Node.js: A runtime environment for executing server-side JavaScript code.
+
+- **GraphQL:** A query language and runtime for APIs.
+
+- **NGINX:** A web server and reverse proxy server used for server deployment.
+
+- **JWT (JSON Web Tokens):** A standard for securely transmitting information between parties as a JSON object.
+
+- **Cloudinary:** A cloud-based image and video management platform.
+
+- **Other libraries and tools:** React Router, Apollo Client, GraphQL-Upload, Nodemon, etc.
+
 ## Project Setup and Installation
 
 To run this project locally or deploy it to a server using NGINX, follow the steps below:
