@@ -5,14 +5,6 @@
 </br>
 FreelanceConnect is a website developed using Node.js, MongoDB, React, and GraphQL. It serves as a platform for connecting freelancers with clients. Freelancers can showcase their services and clients can easily browse and order these services.
 
-* Team Members:
-  - Anas Lamaiz @Anass001
-  - Ismail Oukha @itsmeismaill
-* Supervising Professor:
-  - Mr. Lotfi Elaachak 
-* Course Module:
-  - Développement web et frameworks
-
 ## Features
 This project includes the following features:
 
@@ -265,3 +257,13 @@ Replace the placeholders with the actual values specific to your project.
 9. Access the application:
 
 Visit your domain or server IP address in a web browser to access the deployed application.
+
+## Authors
+This exceptional project was expertly developed as an end-of-module assignment. Our talented team, consisting of:
+  - Anas Lamaiz [@Anass001](https://github.com/Anass001)
+  - Ismail Oukha [@itsmeismaill](https://github.com/itsmeismaill)
+
+collaborated under the invaluable guidance of Professor:
+  - Mr. Lotfi Elaachak
+
+Together, we dedicated ourselves to crafting a remarkable endeavor that showcases our skills and knowledge in the field of web development and frameworks.
